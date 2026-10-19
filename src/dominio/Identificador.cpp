@@ -16,11 +16,13 @@ void Identificador::validar(const std::string& valor){
     if(valor.length()!=6){
         throw std::invalid_argument("Identificador invalido");
     }
+    ///verifica se os tres primeiros caracteres do identificador sao letras.
     for(int i=0; i<3; i++){
         if(!std::isalpha(static_cast<unsigned char>(valor[i]))){
             throw std::invalid_argument("Os tres primeiros caracteres devem ser letras.");
         }
     }
+    ///verifica se os ultimos tres caracteres do identificador sao numeros.
     for(int i=3; i<6; i++){
         if(!std::isdigit(valor[i])){
             throw std::invalid_argument("Os tres ultimos caracteres devem ser numeros.");

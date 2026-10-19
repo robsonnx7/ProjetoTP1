@@ -5,7 +5,8 @@
 #include "Email.h"
 #include "Estado.h"
 #include "Identificador.h"
-
+#include "Limite.h"
+#include "Nome.h"
 #include "Timestamp.h"
 #include "Texto.h"
 #include "Tamanho.h"
@@ -262,6 +263,83 @@ void testarPrioridadeInvalida(const std::string& prioridadeTeste) {
         std::cout << "[ERRO FALHO] Deveria rejeitar '" << prioridadeTeste << "', mas aceitou." << std::endl;
     } catch (const std::invalid_argument& e) {
         std::cout << "[OK] Rejeitou corretamente '" << prioridadeTeste << "': " << e.what() << std::endl;
+    }
+}
+//==================================================
+// FUNÇÕES TESTE LIMITE
+//==================================================
+
+void testarLimiteValido(int limiteTeste) {
+    try {
+        Limite l(limiteTeste);
+
+        std::cout << "[OK] Sucesso: "
+                  << l.getValor()
+                  << std::endl;
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "[ERRO FALHO] Deveria aceitar "
+                  << limiteTeste
+                  << ", mas lancou: "
+                  << e.what()
+                  << std::endl;
+    }
+}
+
+void testarLimiteInvalido(int limiteTeste) {
+    try {
+        Limite l(limiteTeste);
+
+        std::cout << "[ERRO FALHO] Deveria rejeitar "
+                  << limiteTeste
+                  << ", mas aceitou."
+                  << std::endl;
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "[OK] Rejeitou corretamente "
+                  << limiteTeste
+                  << ": "
+                  << e.what()
+                  << std::endl;
+    }
+}
+
+//==================================================
+// FUNÇÕES TESTE NOME
+//==================================================
+
+void testarNomeValido(const std::string& nomeTeste) {
+    try {
+        Nome n(nomeTeste);
+
+        std::cout << "[OK] Sucesso: "
+                  << n.getValor()
+                  << std::endl;
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "[ERRO FALHO] Deveria aceitar '"
+                  << nomeTeste
+                  << "', mas lancou: "
+                  << e.what()
+                  << std::endl;
+    }
+}
+
+void testarNomeInvalido(const std::string& nomeTeste) {
+    try {
+        Nome n(nomeTeste);
+
+        std::cout << "[ERRO FALHO] Deveria rejeitar '"
+                  << nomeTeste
+                  << "', mas aceitou."
+                  << std::endl;
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "[OK] Rejeitou corretamente '"
+                  << nomeTeste
+                  << "': "
+                  << e.what()
+                  << std::endl;
     }
 }
 
@@ -535,6 +613,70 @@ int main() {
     for (const auto& p : invalidos) {
         testarPrioridadeInvalida(p);
     }
+        //=====================================
+    // LIMITE
+    //=====================================
 
+    std::cout << "\n=== TESTES DE LIMITE VALIDOS ===" << std::endl;
+
+    std::vector<int> limitesValidos = {
+        1,
+        5,
+        10,
+        20,
+        25
+    };
+
+    for (const auto& l : limitesValidos) {
+        testarLimiteValido(l);
+    }
+
+    std::cout << "\n=== TESTES DE LIMITE INVALIDOS ===" << std::endl;
+
+    std::vector<int> limitesInvalidos = {
+        0,
+        -1,
+        26,
+        50,
+        100
+    };
+
+    for (const auto& l : limitesInvalidos) {
+        testarLimiteInvalido(l);
+    }
+
+        //=====================================
+    // NOME
+    //=====================================
+
+    std::cout << "\n=== TESTES DE NOME VALIDOS ===" << std::endl;
+
+    validos = {
+        "Joao",
+        "Maria",
+        "Pedro Silva",
+        "Ana Clara",
+        "Jose Carlos"
+    };
+
+    for (const auto& nome : validos) {
+        testarNomeValido(nome);
+    }
+
+    std::cout << "\n=== TESTES DE NOME INVALIDOS ===" << std::endl;
+
+    invalidos = {
+        "",
+        " Pedro",            // inicia com espaço
+        "Pedro ",            // termina com espaço
+        "Pedro  Silva",      // espaço seguido de espaço
+        "Pedro123",          // contém números
+        "Pedro@",            // caractere especial
+        "NomeMuitoGrandeDemais" // mais de 15 caracteres
+    };
+
+    for (const auto& nome : invalidos) {
+        testarNomeInvalido(nome);
+    }
     return 0;
 }

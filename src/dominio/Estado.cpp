@@ -11,6 +11,7 @@ std::string Estado::getValor() const{
     return valor;
 }
 void Estado::validar(const std::string& valor){
+    ///verifica se a entrada é correspondente a algum dos estados de atividade atribuidos.
     if(valor != "A FAZER" &&
        valor != "FAZENDO" &&
        valor != "FEITO"){
