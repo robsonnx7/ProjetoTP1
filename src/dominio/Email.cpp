@@ -15,7 +15,7 @@ std::string Email::getValor() const {
 }
 
 void Email::validar(const std::string& valor) {
-    // 1. Verificar se o email digitado possui o caractere '@'
+    /// 1. Verificar se o email digitado possui o caractere '@'
     size_t posArroba = valor.find('@');
     if (posArroba == std::string::npos || valor.find('@', posArroba + 1) != std::string::npos) {
         throw std::invalid_argument("E-mail invalido: deve conter exatamente um caractere '@'.");
@@ -24,7 +24,7 @@ void Email::validar(const std::string& valor) {
     std::string parteLocal = valor.substr(0, posArroba);
     std::string dominio = valor.substr(posArroba + 1);
 
-    // 2. Parte Local
+    /// 2. Parte Local
     if (parteLocal.empty() || parteLocal.length() > 64) {
         throw std::invalid_argument("E-mail invalido: tamanho da parte local deve ter entre 1 e 64 caracteres.");
     }
@@ -40,7 +40,7 @@ void Email::validar(const std::string& valor) {
         if (!std::isalnum(static_cast<unsigned char>(c)) && c != '.' && c != '-') {
             throw std::invalid_argument("E-mail invalido: caractere nao permitido na parte local.");
         }
-        // Ponto ou hífen deve ser seguido por letra ou dígito
+        /// Ponto ou hífen deve ser seguido por letra ou dígito
         if ((c == '.' || c == '-') && i + 1 < parteLocal.length()) {
             char proximo = parteLocal[i + 1];
             if (!std::isalnum(static_cast<unsigned char>(proximo))) {
@@ -49,12 +49,12 @@ void Email::validar(const std::string& valor) {
         }
     }
 
-    // 3. Domínio
+    /// 3. Domínio
     if (dominio.empty() || dominio.length() > 255) {
         throw std::invalid_argument("Email invalido: tamanho do dominio deve ter entre 1 e 255 caracteres.");
     }
 
-    // O domínio é totalmente composto por partes separadas por '.'
+    /// O domínio é totalmente composto por partes separadas por '.'
     size_t inicio = 0;
     while (inicio < dominio.length()) {
         size_t fim = dominio.find('.', inicio);

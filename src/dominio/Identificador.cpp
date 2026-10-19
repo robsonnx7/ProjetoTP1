@@ -12,7 +12,7 @@ std::string Identificador::getValor() const{
     return valor;
 }
 void Identificador::validar(const std::string& valor){
-    // verifica se o identificador digitado possui 6 caracteres.
+    /// verifica se o identificador digitado possui 6 caracteres.
     if(valor.length()!=6){
         throw std::invalid_argument("Identificador invalido");
     }

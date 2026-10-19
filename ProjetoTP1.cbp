@@ -39,6 +39,7 @@
 		<Unit filename="include/dominio/Limite.h" />
 		<Unit filename="include/dominio/Nome.h" />
 		<Unit filename="include/dominio/Papel.h" />
+		<Unit filename="include/dominio/Prioridade.h" />
 		<Unit filename="include/dominio/Senha.h" />
 		<Unit filename="include/dominio/Tamanho.h" />
 		<Unit filename="include/dominio/Texto.h" />
