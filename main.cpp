@@ -14,6 +14,11 @@
 #include "Papel.h"
 #include "Prioridade.h"
 
+#include "Projeto.h"
+#include "Quadro.h"
+#include "CartaoAtividade.h"
+#include "Pessoa.h"
+
 // ==================================================
 // TESTES EMAIL
 // ==================================================
@@ -343,6 +348,64 @@ void testarNomeInvalido(const std::string& nomeTeste) {
     }
 }
 
+//==========================================
+// Teste Entidades
+//==========================================
+
+void testarEntidades() {
+    std::cout << "\n === INICIANDO TESTES DAS ENTIDADES ===" << std::endl;
+
+    try {
+        // 1. Testando a Entidade PROJETO
+        Projeto projeto;
+        projeto.setIdentificador(Identificador("ABC123"));
+        projeto.setNome(Nome("Sistema de TP"));
+        projeto.setDescricao(Texto("Sistema de Gestao!"));
+        projeto.setInicio(Timestamp("01-OUT-2026-08:00"));
+        projeto.setTermino(Timestamp("25-NOV-2026-18:00"));
+
+        std::cout << "[OK] Projeto criado com sucesso:" << std::endl;
+        std::cout << "   - ID: " << projeto.getIdentificador().getValor() << std::endl;
+        std::cout << "   - Nome: " << projeto.getNome().getValor() << std::endl;
+        std::cout << "   - Descricao: " << projeto.getDescricao().getValor() << std::endl;
+        std::cout << "   - Inicio: " << projeto.getInicio().getValor() << std::endl;
+        std::cout << "   - Termino: " << projeto.getTermino().getValor() << std::endl;
+
+        // 2. Testando a Entidade QUADRO
+        Quadro quadro;
+        quadro.setIdentificador(Identificador("XYZ789"));
+        quadro.setNome(Nome("Quadro inicial"));
+        quadro.setLimite(Limite(10));
+
+        std::cout << "\n[OK] Quadro criado com sucesso:" << std::endl;
+        std::cout << "   - ID: " << quadro.getIdentificador().getValor() << std::endl;
+        std::cout << "   - Nome: " << quadro.getNome().getValor() << std::endl;
+        std::cout << "   - Limite WIP: " << quadro.getLimite().getValor() << std::endl;
+
+        // 3. Testando a Entidade CARTAO DE ATIVIDADE
+        CartaoAtividade cartao;
+        cartao.setIdentificador(Identificador("CAR123"));
+        cartao.setNome(Nome("Criar Telas"));
+        cartao.setDescricao(Texto("Construir a interface inicial!"));
+        cartao.setPrioridade(Prioridade("ALTA"));
+        cartao.setEstado(Estado("FAZENDO"));
+        cartao.setTamanho(Tamanho("GRANDE"));
+        cartao.setEntrada(Timestamp("15-OUT-2026-10:00"));
+        cartao.setInicio(Timestamp("16-OUT-2026-09:00"));
+        cartao.setTermino(Timestamp("18-OUT-2026-17:00"));
+
+        std::cout << "\n[OK] Cartao de Atividade criado com sucesso:" << std::endl;
+        std::cout << "   - ID: " << cartao.getIdentificador().getValor() << std::endl;
+        std::cout << "   - Nome: " << cartao.getNome().getValor() << std::endl;
+        std::cout << "   - Prioridade: " << cartao.getPrioridade().getValor() << std::endl;
+        std::cout << "   - Estado: " << cartao.getEstado().getValor() << std::endl;
+        std::cout << "   - Tamanho: " << cartao.getTamanho().getValor() << std::endl;
+
+    } catch (const std::exception& e) {
+        std::cout << "[ERRO] Falha inesperada durante os testes: " << e.what() << std::endl;
+    }
+}
+
 // ==================================================
 // MAIN
 // ==================================================
@@ -613,7 +676,7 @@ int main() {
     for (const auto& p : invalidos) {
         testarPrioridadeInvalida(p);
     }
-        //=====================================
+    //=====================================
     // LIMITE
     //=====================================
 
@@ -645,7 +708,7 @@ int main() {
         testarLimiteInvalido(l);
     }
 
-        //=====================================
+    //=====================================
     // NOME
     //=====================================
 
@@ -678,5 +741,8 @@ int main() {
     for (const auto& nome : invalidos) {
         testarNomeInvalido(nome);
     }
+
+    testarEntidades();
+
     return 0;
 }
