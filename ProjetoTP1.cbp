@@ -44,6 +44,10 @@
 		<Unit filename="include/dominio/Tamanho.h" />
 		<Unit filename="include/dominio/Texto.h" />
 		<Unit filename="include/dominio/Timestamp.h" />
+		<Unit filename="include/entidade/CartaoAtividade.h" />
+		<Unit filename="include/entidade/Pessoa.h" />
+		<Unit filename="include/entidade/Projeto.h" />
+		<Unit filename="include/entidade/Quadro.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/dominio/Email.cpp" />
 		<Unit filename="src/dominio/Estado.cpp" />
@@ -56,6 +60,10 @@
 		<Unit filename="src/dominio/Tamanho.cpp" />
 		<Unit filename="src/dominio/Texto.cpp" />
 		<Unit filename="src/dominio/Timestamp.cpp" />
+		<Unit filename="src/entidade/CartaoAtividade.cpp" />
+		<Unit filename="src/entidade/Pessoa.cpp" />
+		<Unit filename="src/entidade/Projeto.cpp" />
+		<Unit filename="src/entidade/Quadro.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
