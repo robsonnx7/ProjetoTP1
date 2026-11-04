@@ -1,4 +1,4 @@
-#include "../../include/entidade/Pessoa.h"
+#include "Pessoa.h"
 
 /**
  * @brief Define o email da pessoa.

@@ -33,13 +33,17 @@
 			<Add option="-fexceptions" />
 			<Add directory="include/dominio" />
 		</Compiler>
+		<Unit filename="include/dominio/CartaoAtividade.h" />
 		<Unit filename="include/dominio/Email.h" />
 		<Unit filename="include/dominio/Estado.h" />
 		<Unit filename="include/dominio/Identificador.h" />
 		<Unit filename="include/dominio/Limite.h" />
 		<Unit filename="include/dominio/Nome.h" />
 		<Unit filename="include/dominio/Papel.h" />
+		<Unit filename="include/dominio/Pessoa.h" />
 		<Unit filename="include/dominio/Prioridade.h" />
+		<Unit filename="include/dominio/Projeto.h" />
+		<Unit filename="include/dominio/Quadro.h" />
 		<Unit filename="include/dominio/Senha.h" />
 		<Unit filename="include/dominio/Tamanho.h" />
 		<Unit filename="include/dominio/Texto.h" />
@@ -49,13 +53,17 @@
 		<Unit filename="include/entidade/Projeto.h" />
 		<Unit filename="include/entidade/Quadro.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/dominio/CartaoAtividade.cpp" />
 		<Unit filename="src/dominio/Email.cpp" />
 		<Unit filename="src/dominio/Estado.cpp" />
 		<Unit filename="src/dominio/Identificador.cpp" />
 		<Unit filename="src/dominio/Limite.cpp" />
 		<Unit filename="src/dominio/Nome.cpp" />
 		<Unit filename="src/dominio/Papel.cpp" />
+		<Unit filename="src/dominio/Pessoa.cpp" />
 		<Unit filename="src/dominio/Prioridade.cpp" />
+		<Unit filename="src/dominio/Projeto.cpp" />
+		<Unit filename="src/dominio/Quadro.cpp" />
 		<Unit filename="src/dominio/Senha.cpp" />
 		<Unit filename="src/dominio/Tamanho.cpp" />
 		<Unit filename="src/dominio/Texto.cpp" />
