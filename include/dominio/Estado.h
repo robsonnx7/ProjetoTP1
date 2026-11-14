@@ -21,7 +21,7 @@
 class Estado{
 private:
     std::string valor;                               ///< armazena um Estado valido.
-    void validar(const std::string& valor);          ///< Verifica se o estado informado atende às regras do domínio.
+    void validar(const std::string& valor);          ///< Verifica se o estado informado é A FAZER, FAZENDO ou FEITO.
 
 
 public:
