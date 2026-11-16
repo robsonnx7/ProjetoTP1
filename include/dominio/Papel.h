@@ -4,29 +4,30 @@
 #include <string>
 #include <stdexcept>
 
-/// Classe que representa o dominio Papel do sistema.
-// Garante que apenas os papéis 'GESTOR' ou 'DESENVOLVEDOR' sejam aceitos.
+ /**
+ * @file Papel.h
+ * @brief Definição da classe Dominio Papel para o sistema.
+ */
+
+/**
+ * @class Papel
+ * @brief Representa e valida um papel.
+ *
+ * Esta classe armazena um papel valido e garante
+ * que o valor informado atenda às regras de validação
+ * estabelecidas pelo domínio.
+ */
+
 class Papel {
 private:
-    /// Atributo privado que armazena a string do papel validado
-    std::string valor;
-
-    /// Metodo privado auxiliar que valida se a entrada corresponde a um dos valores permitidos.
-    // Lanca std::invalid_argument se o valor for invalido.
-    void validar(const std::string& valor);
+    std::string valor;                         ///< armazena um Papel valido.
+    void validar(const std::string& valor);    ///< verifica se a entrada corresponde a um dos valores permitidos "GESTOR" ou "DESENVOLVEDOR".
 
 public:
-    /// Construtor padrao
-    Papel() = default;
-
-    /// Construtor com parametro que ja valida a string recebida
-    explicit Papel(const std::string& valor);
-
-    /// Atualiza o valor armazenado apos validacao
-    void setValor(const std::string& valor);
-
-    /// Retorna o papel armazenado
-    std::string getValor() const;
+    Papel() = default;                         ///< construtor padrao.
+    explicit Papel(const std::string& valor);  ///< constroi um objeto papel a partir do valor informado.
+    void setValor(const std::string& valor);   ///< Define um novo papel após validação.
+    std::string getValor() const;              ///< retorna o papel armazenado
 };
 
 #endif // PAPEL_H

@@ -4,29 +4,29 @@
 #include <string>
 #include <stdexcept>
 
-/// Classe que representa o dominio Texto do sistema Kanban.
-/// Garante o encapsulamento e a validacao do valor conforme as regras do trabalho.
+/**
+ * @file Texto.h
+ * @brief Definição da classe domínio Texto para o sistema.
+ */
+
+/**
+ * @class Texto
+ * @brief Representa e valida um texto.
+ *
+ * Esta classe armazena um texto válido e garante
+ * que o valor informado atenda às regras de validação
+ * estabelecidas pelo domínio.
+ */
 class Texto {
 private:
-    /// Atributo privado para armazenar o valor do texto apos validacao
-    std::string valor;
-
-    /// Metodo privado auxiliar que valida a string.
-    /// Lanca std::invalid_argument se qualquer regra for violada.
-    void validar(const std::string& valor);
+    std::string valor;                             ///< Armazena um texto válido.
+    void validar(const std::string& valor);        ///< Verifica se o texto possui até 30 caracteres e atende às regras de formatação do domínio.
 
 public:
-    /// Construtor padrao (sem argumentos)
-    Texto() = default;
-
-    /// Construtor com parametro: inicializa o objeto ja validando a string fornecida
-    explicit Texto(const std::string& valor);
-
-    /// Altera o valor armazenado, passando obrigatoriamente pela validacao
-    void setValor(const std::string& valor);
-
-    /// Retorna o texto armazenado (metodo const garante que nao altera o estado do objeto)
-    std::string getValor() const;
+    Texto() = default;                             ///< Construtor padrão.
+    explicit Texto(const std::string& valor);      ///< Constrói um objeto Texto a partir de um valor informado.
+    void setValor(const std::string& valor);       ///< Define um novo texto após validação.
+    std::string getValor() const;                  ///< Retorna o texto armazenado.
 };
 
 #endif // TEXTO_H

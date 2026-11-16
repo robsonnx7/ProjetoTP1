@@ -4,28 +4,31 @@
 #include <string>
 #include <stdexcept>
 
-/// Classe que representa o dominio Senha do sistema.
-/// Garante que a senha possua exatamente 5 caracteres com pelo menos uma letra e um digito.
+ /**
+ * @file Senha.h
+ * @brief Definição da classe Dominio Senha para o sistema.
+ */
+
+/**
+ * @class Senha
+ * @brief Representa e valida uma Senha.
+ *
+ * Esta classe armazena uma Senha valida e garante
+ * que o valor informado atenda às regras de validação
+ * estabelecidas pelo domínio.
+ */
+
 class Senha {
 private:
-    /// Atributo privado que armazena a string da senha validada
-    std::string valor;
+    std::string valor;                           ///< Armazena uma senha valida.
 
-    /// Metodo privado auxiliar que aplica as regras de validacao
-    void validar(const std::string& valor);
+    void validar(const std::string& valor);      ///< Verifica se a senha possui 5 caracteres alfanuméricos, contendo ao menos uma letra e um dígito.
 
 public:
-    /// Construtor padrao
-    Senha() = default;
-
-    /// Construtor com parametro: inicializa o objeto ja validando a string fornecida
-    explicit Senha(const std::string& valor);
-
-    /// Altera o valor armazenado apos validacao
-    void setValor(const std::string& valor);
-
-    /// Retorna a senha armazenada
-    std::string getValor() const;
+    Senha() = default;                           ///< Construtor padrao
+    explicit Senha(const std::string& valor);    ///< Constroi um objeto Senha com o valor informado
+    void setValor(const std::string& valor);     ///< Define uma nova senha apos a validaçao
+    std::string getValor() const;                ///< Retorna a senha armazenada
 };
 
 #endif // SENHA_H

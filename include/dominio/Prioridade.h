@@ -4,29 +4,37 @@
 #include <string>
 #include <stdexcept>
 
-/// Classe que representa o dominio Prioridade do sistema Kanban.
-/// Garante que apenas os valores 'ALTA', 'MEDIA' ou 'BAIXA' sejam aceitos.
+ /**
+ * @file Prioridade.h
+ * @brief Definição da classe Dominio Prioridade para o sistema.
+ */
+
+/**
+ * @class Prioridade
+ * @brief Representa e valida uma prioridade.
+ *
+ * Esta classe armazena uma prioridade valida e garante
+ * que o valor informado atenda às regras de validação
+ * estabelecidas pelo domínio.
+ */
+
 class Prioridade {
 private:
-    // Atributo privado para armazenar a string da prioridade validada
-    std::string valor;
+    std::string valor;                                ///< Armazena uma prioridade valida.
 
-    /// Metodo privado auxiliar que valida a entrada.
-    // Lanca std::invalid_argument caso o valor nao corresponda às opções permitidas.
-    void validar(const std::string& valor);
+    void validar(const std::string& valor);           ///< verifica se a entrada corresponde a um dos valores permitidos: "BAIXA", "MEDIA" ou "ALTA".
 
 public:
     // Construtor padrao
-    Prioridade() = default;
+    Prioridade() = default;                           ///< Construtor padrao
 
-    // Construtor com parametro que ja valida a string recebida
-    explicit Prioridade(const std::string& valor);
+    explicit Prioridade(const std::string& valor);    ///< Constroi um objeto Prioridade a partir de um valor informado.
 
-    // Altera o valor armazenado apos validacao
-    void setValor(const std::string& valor);
 
-    // Retorna a prioridade armazenada
-    std::string getValor() const;
+    void setValor(const std::string& valor);          ///< Define a nova Prioridade apos a validaçao.
+
+
+    std::string getValor() const;                     ///< Retorna a prioridade armazenada.
 };
 
 #endif // PRIORIDADE_H

@@ -4,29 +4,39 @@
 #include <string>
 #include <stdexcept>
 
-/// Classe que representa o dominio Tamanho do sistema.
-/// Garante que apenas os valores 'GRANDE', 'MEDIO' ou 'PEQUENO' sejam aceitos.
+ /**
+ * @file Tamanho.h
+ * @brief Definição da classe Dominio Tamanho para o sistema.
+ */
+
+/**
+ * @class Tamanho
+ * @brief Representa e valida um tamanho.
+ *
+ * Esta classe armazena um Tamanho valido e garante
+ * que o valor informado atenda às regras de validação
+ * estabelecidas pelo domínio.
+ */
+
 class Tamanho {
 private:
-    /// Atributo privado que armazena a string do tamanho validado
-    std::string valor;
 
-    /// Metodo privado que valida se a entrada corresponde a um dos valores permitidos.
-    /// Lanca std::invalid_argument se o valor for diferente dos esperados.
-    void validar(const std::string& valor);
+    std::string valor;                                 ///< Armazena um tamanho
+
+    void validar(const std::string& valor);            ///< Verifica se o valor corresponde a um dos tamanhos permitidos: "GRANDE", "MEDIO" ou "PEQUENO"..
 
 public:
-    /// Construtor padrao
-    Tamanho() = default;
 
-    /// Construtor com parametro que imediatamente valida a string recebida
-    explicit Tamanho(const std::string& valor);
+    Tamanho() = default;                               ///< Construtor padrao.
 
-    /// Atualiza o valor armazenado apos validacao do construtor acima
-    void setValor(const std::string& valor);
 
-    /// Retorna o tamanho armazenado
-    std::string getValor() const;
+    explicit Tamanho(const std::string& valor);        ///< Constrói um objeto Tamanho a partir de um valor informado.
+
+
+    void setValor(const std::string& valor);           ///< Define um novo tamanho após validação.
+
+
+    std::string getValor() const;                      ///< Retorna o tamanho armazenado.
 };
 
 #endif // TAMANHO_H
