@@ -22,13 +22,17 @@
 class Nome{
 private:
     std::string valor;                                ///< armazena um Nome valido.
+
     void validar(const std::string& valor);           ///< Verifica se o nome atende às regras do domínio.
 
 public:
     Nome() = default;                                 ///< Construtor padrão.
+
     explicit Nome(const std::string& valor);          ///< Constrói um objeto Nome a partir de um valor informado.
 
+
     void setValor(const std::string& valor);          ///< Define um novo Limite após validação.
+
     std::string getValor() const;                     ///< Retorna o Nome armazenado.
 };
 

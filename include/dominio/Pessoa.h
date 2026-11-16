@@ -1,52 +1,65 @@
 #ifndef PESSOA_H_INCLUDED
 #define PESSOA_H_INCLUDED
 
-///Inclusao dos arquivos utilizados pela entidade
+/// Inclusão dos domínios utilizados pela entidade.
 #include "Email.h"
 #include "Papel.h"
 #include "Senha.h"
 #include "Nome.h"
 
 /**
- * @brief Entidade que representa uma pessoa no sistema.
+ * @file Pessoa.h
+ * @brief Definição da entidade Pessoa.
+ */
+
+/**
+ * @class Pessoa
+ * @brief Representa uma pessoa cadastrada no sistema.
  *
  * A entidade Pessoa é composta pelos domínios:
  * - Email
  * - Nome
  * - Senha
  * - Papel
+ *
+ * Cada atributo é armazenado por meio de um domínio,
+ * responsável por garantir a validade dos dados
+ * associados à pessoa.
  */
- class Pessoa{
- private:
-     ///endereço de email
-     Email email;
+class Pessoa {
+private:
 
-     ///nome da pessoa
-     Nome nome;
+    Email email;
+    ///< Endereço de e-mail da pessoa.
 
-     ///senha da pessoa
-     Senha senha;
+    Nome nome;
+    ///< Nome da pessoa.
 
-     ///papel da pessoa
-     Papel papel;
+    Senha senha;
+    ///< Senha utilizada para autenticação da pessoa.
 
- public:
-     /**
-      @brief Atribui um email à pessoa.
-      @param email Domínio Email validado.
+    Papel papel;
+    ///< Papel desempenhado pela pessoa no sistema.
+
+public:
+
+    /**
+     * @brief Define o e-mail da pessoa.
+     * @param email Domínio Email validado.
      */
-     void setEmail(const Email&email);
+    void setEmail(const Email& email);
 
-     /**
-     * @brief Retorna o email da pessoa.
-     * @return Email armazenado.
+    /**
+     * @brief Retorna o e-mail da pessoa.
+     * @return E-mail armazenado.
      */
-     Email getEmail()const;
-     /**
-     * @brief Atribui um nome à pessoa.
+    Email getEmail() const;
+
+    /**
+     * @brief Define o nome da pessoa.
      * @param nome Domínio Nome validado.
      */
-    void setNome(const Nome &nome);
+    void setNome(const Nome& nome);
 
     /**
      * @brief Retorna o nome da pessoa.
@@ -55,10 +68,10 @@
     Nome getNome() const;
 
     /**
-     * @brief Atribui uma senha à pessoa.
+     * @brief Define a senha da pessoa.
      * @param senha Domínio Senha validado.
      */
-    void setSenha(const Senha &senha);
+    void setSenha(const Senha& senha);
 
     /**
      * @brief Retorna a senha da pessoa.
@@ -67,10 +80,10 @@
     Senha getSenha() const;
 
     /**
-     * @brief Atribui um papel à pessoa.
+     * @brief Define o papel da pessoa.
      * @param papel Domínio Papel validado.
      */
-    void setPapel(const Papel &papel);
+    void setPapel(const Papel& papel);
 
     /**
      * @brief Retorna o papel da pessoa.

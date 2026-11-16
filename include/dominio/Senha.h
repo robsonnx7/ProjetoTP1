@@ -25,10 +25,13 @@ private:
     void validar(const std::string& valor);      ///< Verifica se a senha possui 5 caracteres alfanuméricos, contendo ao menos uma letra e um dígito.
 
 public:
-    Senha() = default;                           ///< Construtor padrao
-    explicit Senha(const std::string& valor);    ///< Constroi um objeto Senha com o valor informado
-    void setValor(const std::string& valor);     ///< Define uma nova senha apos a validaçao
-    std::string getValor() const;                ///< Retorna a senha armazenada
+    Senha() = default;                           ///< Construtor padrao.
+
+    explicit Senha(const std::string& valor);    ///< Constroi um objeto Senha com o valor informado.
+
+    void setValor(const std::string& valor);     ///< Define uma nova senha apos a validaçao.
+
+    std::string getValor() const;                ///< Retorna a senha armazenada.
 };
 
 #endif // SENHA_H

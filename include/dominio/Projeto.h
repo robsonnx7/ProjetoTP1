@@ -22,9 +22,13 @@
 class Projeto {
 private:
     Identificador identificador; ///< Identificador único.
+
     Nome nome;                   ///< Nome descritivo do projeto.
+
     Texto descricao;             ///< Descrição detalhada dos objetivos do projeto.
+
     Timestamp inicio;            ///< Data e horário de início do projeto.
+
     Timestamp termino;           ///< Data e horário de término do projeto.
 
 public:

@@ -21,8 +21,11 @@
 class Quadro {
 private:
     Identificador identificador; ///< Identificador único do quadro"necessário citar 2".
+
     Nome nome;                   ///< Nome descritivo do quadro "necessário citar 2".
+
     Limite limite;               ///< Limite de cartões em andamento (WIP) permitido no quadro[cite: 2, 3].
+
 
 public:
     /**

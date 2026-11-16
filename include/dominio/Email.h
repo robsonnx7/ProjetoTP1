@@ -21,13 +21,16 @@
 class Email {
 private:
     std::string valor;                          ///< armazena o endereço de email valido.
+
     void validar(const std::string& valor);     ///< Verifica se o endereço de e-mail atende às regras do domínio.
 
 public:
     Email() = default;                          ///< Construtor padrão.
+
     explicit Email(const std::string& valor);   ///< Constrói um objeto Email a partir de um valor informado.
 
     void setValor(const std::string& valor);    ///< Define um novo endereço de e-mail após validação.
+
     std::string getValor() const;               ///< Retorna o endereço de e-mail armazenado.
 };
 

@@ -21,14 +21,17 @@
 class Estado{
 private:
     std::string valor;                               ///< armazena um Estado valido.
+
     void validar(const std::string& valor);          ///< Verifica se o estado informado é A FAZER, FAZENDO ou FEITO.
 
 
 public:
     Estado() = default;                              ///< Construtor padrão.
+
     explicit Estado(const std::string& valor);       ///< Constrói um objeto Estado a partir de um valor informado.
 
     void setValor(const std::string& valor);         ///< Define um novo Estado após validação.
+
     std::string getValor() const;                    ///< Retorna o Estado armazenado.
 };
 
