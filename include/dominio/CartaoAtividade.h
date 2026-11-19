@@ -24,15 +24,15 @@
  */
 class CartaoAtividade {
 private:
-    Identificador identificador; ///< Identificador único do cartão "citar 2".
-    Nome nome;                   ///< Nome descritivo da atividade "citar 2".
-    Texto descricao;             ///< Descrição detalhada da atividade[cite: 2, 3].
-    Prioridade prioridade;       ///< Nível de prioridade da atividade (alta, media, baixa)[cite: 2, 3].
-    Estado estado;               ///< Estado atual do cartão no Kanban (a fazer, fazendo, feito)[cite: 2, 3].
-    Tamanho tamanho;             ///< Tamanho estimado da atividade (grande, medio, pequeno)[cite: 2, 3].
-    Timestamp entrada;           ///< Momento em que o cartão entrou no quadro[cite: 2, 3].
-    Timestamp inicio;            ///< Momento em que a atividade foi iniciada (movida para "fazendo")[cite: 2, 3].
-    Timestamp termino;           ///< Momento em que a atividade foi concluída (movida para "feito")[cite: 2, 3].
+    Identificador identificador; ///< Identificador único do cartão.
+    Nome nome;                   ///< Nome descritivo da atividade.
+    Texto descricao;             ///< Descrição detalhada da atividade.
+    Prioridade prioridade;       ///< Nível de prioridade da atividade (alta, media, baixa).
+    Estado estado;               ///< Estado atual do cartão no Kanban (a fazer, fazendo, feito).
+    Tamanho tamanho;             ///< Tamanho estimado da atividade (grande, medio, pequeno).
+    Timestamp entrada;           ///< Momento em que o cartão entrou no quadro.
+    Timestamp inicio;            ///< Momento em que a atividade foi iniciada (movida para "fazendo").
+    Timestamp termino;           ///< Momento em que a atividade foi concluída (movida para "feito").
 
 public:
     /**
