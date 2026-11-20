@@ -13,6 +13,8 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="C:/GitHub/ProjetoTP1/" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
