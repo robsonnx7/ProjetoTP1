@@ -25,7 +25,6 @@ private:
     void validar(const std::string& valor);           ///< verifica se a entrada corresponde a um dos valores permitidos: "BAIXA", "MEDIA" ou "ALTA".
 
 public:
-    // Construtor padrao
     Prioridade() = default;                           ///< Construtor padrao
 
     explicit Prioridade(const std::string& valor);    ///< Constroi um objeto Prioridade a partir de um valor informado.

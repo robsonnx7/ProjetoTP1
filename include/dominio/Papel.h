@@ -21,13 +21,18 @@
 class Papel {
 private:
     std::string valor;                         ///< armazena um Papel valido.
+
     void validar(const std::string& valor);    ///< verifica se a entrada corresponde a um dos valores permitidos "GESTOR" ou "DESENVOLVEDOR".
+
 
 public:
     Papel() = default;                         ///< construtor padrao.
+
     explicit Papel(const std::string& valor);  ///< constroi um objeto papel a partir do valor informado.
+
     void setValor(const std::string& valor);   ///< Define um novo papel após validação.
-    std::string getValor() const;              ///< retorna o papel armazenado
+
+    std::string getValor() const;              ///< retorna o papel armazenado.
 };
 
 #endif // PAPEL_H
