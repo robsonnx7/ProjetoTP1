@@ -15,6 +15,11 @@
 					<Add option="-g" />
 					<Add directory="C:/GitHub/ProjetoTP1/" />
 					<Add directory="include" />
+					<Add directory="C:/GitHub/ProjetoTP1/include/serviços/interfaces" />
+					<Add directory="include/serviço/interfaces" />
+					<Add directory="include/serviço/implementação" />
+					<Add directory="include/serviço/containers" />
+					<Add directory="include/apresentação" />
 				</Compiler>
 			</Target>
 			<Target title="Release">

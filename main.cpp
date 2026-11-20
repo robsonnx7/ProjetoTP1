@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 #include "Email.h"
 #include "Estado.h"
@@ -18,6 +19,10 @@
 #include "Quadro.h"
 #include "CartaoAtividade.h"
 #include "Pessoa.h"
+
+#include "PessoaContainer.h"
+#include "PessoaService.h"
+#include "PessoaController.h"
 
 // ==================================================
 // TESTES EMAIL
@@ -50,8 +55,7 @@ void testarEmailInvalido(const std::string& emailTeste) {
         std::cout << "[OK] Rejeitou corretamente '"
                   << emailTeste
                   << "': "
-                  << e.what()
-                  << std::endl;
+                  << e.what() << std::endl;
     }
 }
 
@@ -71,8 +75,7 @@ void testarEstadoValido(const std::string& estadoTeste) {
         std::cout << "[ERRO FALHO] Deveria aceitar '"
                   << estadoTeste
                   << "', mas lançou: "
-                  << e.what()
-                  << std::endl;
+                  << e.what() << std::endl;
     }
 }
 
@@ -89,8 +92,7 @@ void testarEstadoInvalido(const std::string& estadoTeste) {
         std::cout << "[OK] Rejeitou corretamente '"
                   << estadoTeste
                   << "': "
-                  << e.what()
-                  << std::endl;
+                  << e.what() << std::endl;
     }
 }
 
@@ -110,8 +112,7 @@ void testarIdentificadorValido(const std::string& identificadorTeste) {
         std::cout << "[ERRO FALHO] Deveria aceitar '"
                   << identificadorTeste
                   << "', mas lançou: "
-                  << e.what()
-                  << std::endl;
+                  << e.what() << std::endl;
     }
 }
 
@@ -128,14 +129,13 @@ void testarIdentificadorInvalido(const std::string& identificadorTeste) {
         std::cout << "[OK] Rejeitou corretamente '"
                   << identificadorTeste
                   << "': "
-                  << e.what()
-                  << std::endl;
+                  << e.what() << std::endl;
     }
 }
 
-//========================================================
-//FUNÇÕES TESTE TIMESTAMP
-//========================================================
+// ==================================================
+// FUNÇÕES TESTE TIMESTAMP
+// ==================================================
 
 void testarTimestampValido(const std::string& ts) {
     try {
@@ -155,11 +155,10 @@ void testarTimestampInvalido(const std::string& ts) {
     }
 }
 
-//========================================================
-//FUNÇÕES TESTE TEXTO
-//========================================================
+// ==================================================
+// FUNÇÕES TESTE TEXTO
+// ==================================================
 
-/// Funcao para testar entradas que devem ser ACEITAS
 void testarTextoValido(const std::string& txt) {
     try {
         Texto t(txt);
@@ -169,7 +168,6 @@ void testarTextoValido(const std::string& txt) {
     }
 }
 
-/// Funcao para testar entradas que devem ser REJEITADAS
 void testarTextoInvalido(const std::string& txt) {
     try {
         Texto t(txt);
@@ -179,11 +177,10 @@ void testarTextoInvalido(const std::string& txt) {
     }
 }
 
-//=========================================================
-//FUNÇÕES TESTE TAMANHO
-//=========================================================
+// ==================================================
+// FUNÇÕES TESTE TAMANHO
+// ==================================================
 
-/// Funcoes de teste para a classe Tamanho
 void testarTamanhoValido(const std::string& tamanhoTeste) {
     try {
         Tamanho t(tamanhoTeste);
@@ -202,11 +199,10 @@ void testarTamanhoInvalido(const std::string& tamanhoTeste) {
     }
 }
 
-//=========================================================
-//FUNÇÕES TESTE SENHA
-//=========================================================
+// ==================================================
+// FUNÇÕES TESTE SENHA
+// ==================================================
 
-/// Funcoes de teste para a classe Senha
 void testarSenhaValida(const std::string& senhaTeste) {
     try {
         Senha s(senhaTeste);
@@ -225,11 +221,10 @@ void testarSenhaInvalida(const std::string& senhaTeste) {
     }
 }
 
-//==================================================
+// ==================================================
 // FUNÇÕES TESTE PAPEL
-//==================================================
+// ==================================================
 
-// Funcoes de teste para a classe Papel
 void testarPapelValido(const std::string& papelTeste) {
     try {
         Papel p(papelTeste);
@@ -248,11 +243,10 @@ void testarPapelInvalido(const std::string& papelTeste) {
     }
 }
 
-//==================================================
+// ==================================================
 // FUNÇÕES TESTE PRIORIDADE
-//==================================================
+// ==================================================
 
-// Funcoes de teste para a classe Prioridade
 void testarPrioridadeValida(const std::string& prioridadeTeste) {
     try {
         Prioridade p(prioridadeTeste);
@@ -270,9 +264,10 @@ void testarPrioridadeInvalida(const std::string& prioridadeTeste) {
         std::cout << "[OK] Rejeitou corretamente '" << prioridadeTeste << "': " << e.what() << std::endl;
     }
 }
-//==================================================
+
+// ==================================================
 // FUNÇÕES TESTE LIMITE
-//==================================================
+// ==================================================
 
 void testarLimiteValido(int limiteTeste) {
     try {
@@ -309,9 +304,9 @@ void testarLimiteInvalido(int limiteTeste) {
     }
 }
 
-//==================================================
+// ==================================================
 // FUNÇÕES TESTE NOME
-//==================================================
+// ==================================================
 
 void testarNomeValido(const std::string& nomeTeste) {
     try {
@@ -348,15 +343,14 @@ void testarNomeInvalido(const std::string& nomeTeste) {
     }
 }
 
-//==========================================
-// Teste Entidades
-//==========================================
+// ==================================================
+// TESTE ENTIDADES
+// ==================================================
 
 void testarEntidades() {
-    std::cout << "\n === INICIANDO TESTES DAS ENTIDADES ===" << std::endl;
+    std::cout << "\n=== INICIANDO TESTES DAS ENTIDADES ===" << std::endl;
 
     try {
-        // 1. Testando a Entidade PROJETO
         Projeto projeto;
         projeto.setIdentificador(Identificador("ABC123"));
         projeto.setNome(Nome("Sistema de TP"));
@@ -371,7 +365,6 @@ void testarEntidades() {
         std::cout << "   - Inicio: " << projeto.getInicio().getValor() << std::endl;
         std::cout << "   - Termino: " << projeto.getTermino().getValor() << std::endl;
 
-        // 2. Testando a Entidade QUADRO
         Quadro quadro;
         quadro.setIdentificador(Identificador("XYZ789"));
         quadro.setNome(Nome("Quadro inicial"));
@@ -382,7 +375,6 @@ void testarEntidades() {
         std::cout << "   - Nome: " << quadro.getNome().getValor() << std::endl;
         std::cout << "   - Limite WIP: " << quadro.getLimite().getValor() << std::endl;
 
-        // 3. Testando a Entidade CARTAO DE ATIVIDADE
         CartaoAtividade cartao;
         cartao.setIdentificador(Identificador("CAR123"));
         cartao.setNome(Nome("Criar Telas"));
@@ -407,30 +399,118 @@ void testarEntidades() {
 }
 
 // ==================================================
+// TESTE PESSOACONTAINER E PESSOASERVICE
+// ==================================================
+
+void testarPessoaContainerEServico() {
+    std::cout << "\n=== INICIANDO TESTES DE PESSOACONTAINER E PESSOASERVICE ===" << std::endl;
+
+    try {
+        Pessoa p1;
+        p1.setEmail(Email("ana.silva@unb.br"));
+        p1.setNome(Nome("Ana Silva"));
+        p1.setSenha(Senha("Abc12"));
+        p1.setPapel(Papel("GESTOR"));
+
+        Pessoa p2;
+        p2.setEmail(Email("carlos@unb.br"));
+        p2.setNome(Nome("Carlos"));
+        p2.setSenha(Senha("1a2b3"));
+        p2.setPapel(Papel("DESENVOLVEDOR"));
+
+        // 1. Testes diretos no PessoaContainer
+        PessoaContainer container;
+        std::cout << (container.inserir(p1) ? "[OK]" : "[ERRO FALHO]")
+                  << " Inserir p1 no container\n";
+        std::cout << (!container.inserir(p1) ? "[OK]" : "[ERRO FALHO]")
+                  << " Bloquear duplicata de p1 no container\n";
+
+        Pessoa buscaContainer;
+        buscaContainer.setEmail(Email("ana.silva@unb.br"));
+        std::cout << (container.buscar(&buscaContainer) && buscaContainer.getNome().getValor() == "Ana Silva"
+                          ? "[OK]" : "[ERRO FALHO]")
+                  << " Buscar p1 no container\n";
+
+        Pessoa p1Atualizada = p1;
+        p1Atualizada.setNome(Nome("Ana Maria"));
+        std::cout << (container.atualizar(p1Atualizada) ? "[OK]" : "[ERRO FALHO]")
+                  << " Atualizar p1 no container\n";
+
+        std::vector<Pessoa> listaContainer;
+        std::cout << (container.listar(&listaContainer) && listaContainer.size() == 1 &&
+                      listaContainer[0].getNome().getValor() == "Ana Maria"
+                          ? "[OK]" : "[ERRO FALHO]")
+                  << " Listar container apos atualizacao\n";
+
+        std::cout << (container.remover(Email("ana.silva@unb.br")) ? "[OK]" : "[ERRO FALHO]")
+                  << " Remover p1 do container\n";
+
+        // 2. Testes no PessoaService
+        PessoaService servico;
+        Papel gestor("GESTOR");
+        Papel dev("DESENVOLVEDOR");
+
+        std::cout << (servico.criar(p1, gestor) ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::criar p1\n";
+        std::cout << (!servico.criar(p1, gestor) ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::criar bloqueia email duplicado\n";
+        std::cout << (servico.criar(p2, dev) ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::criar p2\n";
+
+        Pessoa consultaServico;
+        consultaServico.setEmail(Email("carlos@unb.br"));
+        std::cout << (servico.ler(&consultaServico, gestor) &&
+                      consultaServico.getPapel().getValor() == "DESENVOLVEDOR"
+                          ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::ler p2\n";
+
+        std::cout << (!servico.ler(nullptr, gestor) ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::ler com nullptr retorna false\n";
+
+        Pessoa p2Modificada = p2;
+        p2Modificada.setNome(Nome("Carlos Souza"));
+        std::cout << (servico.atualizar(p2Modificada, gestor) ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::atualizar p2\n";
+
+        std::vector<Pessoa> listaServico;
+        std::cout << (servico.listar(&listaServico, gestor) && listaServico.size() == 2
+                          ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::listar retorna 2 pessoas\n";
+
+        std::cout << (servico.excluir(Email("ana.silva@unb.br"), gestor) ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::excluir p1\n";
+
+        listaServico.clear();
+        std::cout << (servico.listar(&listaServico, gestor) && listaServico.size() == 1
+                          ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::listar apos exclusao retorna 1 pessoa\n";
+
+    } catch (const std::exception& e) {
+        std::cout << "[ERRO] Falha inesperada em PessoaContainer/PessoaService: "
+                  << e.what() << std::endl;
+    }
+}
+
+// ==================================================
 // MAIN
 // ==================================================
 
 int main() {
-
     // =============================================
     // EMAIL
     // =============================================
-
     std::cout << "=== TESTES DE EMAIL VALIDOS ===" << std::endl;
-
     std::vector<std::string> emailsValidos = {
         "usuario@dominio.com",
         "nome.sobrenome@sub.dominio.org",
         "a-b.c@d-e.com",
         "123user@empresa.com.br"
     };
-
     for (const auto& email : emailsValidos) {
         testarEmailValido(email);
     }
 
     std::cout << "\n=== TESTES DE EMAIL INVALIDOS ===" << std::endl;
-
     std::vector<std::string> emailsInvalidos = {
         "usuariosemarroba.com",
         "usuario@@dominio.com",
@@ -441,7 +521,6 @@ int main() {
         "usuario@dominio-.com",
         "usuario@.com"
     };
-
     for (const auto& email : emailsInvalidos) {
         testarEmailInvalido(email);
     }
@@ -449,21 +528,17 @@ int main() {
     // =============================================
     // ESTADO
     // =============================================
-
     std::cout << "\n=== TESTES DE ESTADO VALIDOS ===" << std::endl;
-
     std::vector<std::string> estadosValidos = {
         "A FAZER",
         "FAZENDO",
         "FEITO"
     };
-
     for (const auto& estado : estadosValidos) {
         testarEstadoValido(estado);
     }
 
     std::cout << "\n=== TESTES DE ESTADO INVALIDOS ===" << std::endl;
-
     std::vector<std::string> estadosInvalidos = {
         "",
         "FAZER",
@@ -472,7 +547,6 @@ int main() {
         "feito",
         "fazendo"
     };
-
     for (const auto& estado : estadosInvalidos) {
         testarEstadoInvalido(estado);
     }
@@ -480,22 +554,18 @@ int main() {
     // =============================================
     // IDENTIFICADOR
     // =============================================
-
     std::cout << "\n=== TESTES DE IDENTIFICADOR VALIDOS ===" << std::endl;
-
     std::vector<std::string> identificadoresValidos = {
         "ABC123",
         "abc123",
         "AbC456",
         "xyz999"
     };
-
     for (const auto& identificador : identificadoresValidos) {
         testarIdentificadorValido(identificador);
     }
 
     std::cout << "\n=== TESTES DE IDENTIFICADOR INVALIDOS ===" << std::endl;
-
     std::vector<std::string> identificadoresInvalidos = {
         "AB1234",
         "ABCD12",
@@ -506,14 +576,13 @@ int main() {
         "ABC-12",
         ""
     };
-
     for (const auto& identificador : identificadoresInvalidos) {
         testarIdentificadorInvalido(identificador);
     }
 
-    //=====================================
+    // =============================================
     // TIMESTAMP
-    //=====================================
+    // =============================================
     std::cout << "\n=== TESTES DE TIMESTAMP VALIDOS ===" << std::endl;
     std::vector<std::string> validos = {
         "01-JAN-2020-00:00",
@@ -521,7 +590,6 @@ int main() {
         "31-OUT-2026-15:30",
         "15-AGO-2099-12:00"
     };
-
     for (const auto& ts : validos) {
         testarTimestampValido(ts);
     }
@@ -536,15 +604,13 @@ int main() {
         "10-OUT-2025-24:00",
         "10-OUT-2025-10:60"
     };
-
     for (const auto& ts : invalidos) {
         testarTimestampInvalido(ts);
     }
 
-    //=====================================
+    // =============================================
     // TEXTO
-    //=====================================
-
+    // =============================================
     std::cout << "\n=== TESTES DE TEXTO VALIDOS ===" << std::endl;
     validos = {
         "Tarefa importante",
@@ -552,7 +618,6 @@ int main() {
         "Texto curto?",
         "Exemplo: com pontuacao"
     };
-
     for (const auto& txt : validos) {
         testarTextoValido(txt);
     }
@@ -566,122 +631,111 @@ int main() {
         "Texto com pontuacao!?",
         "Texto com @ invalido"
     };
-
     for (const auto& txt : invalidos) {
         testarTextoInvalido(txt);
     }
 
-    //=======================================
-    //TAMANHO
-    //=======================================
-
+    // =============================================
+    // TAMANHO
+    // =============================================
     std::cout << "\n=== TESTES DE TAMANHO VALIDOS ===" << std::endl;
     validos = {
         "GRANDE",
         "MEDIO",
         "PEQUENO"
     };
-
     for (const auto& t : validos) {
         testarTamanhoValido(t);
     }
 
     std::cout << "\n=== TESTES DE TAMANHO INVALIDOS ===" << std::endl;
     invalidos = {
-        "grande",   /// Minusculo nao e permitido
-        "Médio",    /// Com acento/minusculo
-        "GIGANTE",  /// Valor inexistente
-        "PEQUENO "  /// Espaco no final
+        "grande",
+        "Médio",
+        "GIGANTE",
+        "PEQUENO "
     };
-
     for (const auto& t : invalidos) {
         testarTamanhoInvalido(t);
     }
 
-    //=====================================
+    // =============================================
     // SENHA
-    //=====================================
+    // =============================================
     std::cout << "\n=== TESTES DE SENHA VALIDOS ===" << std::endl;
     validos = {
-        "a1B2c",  /// 5 caracteres, mistura letras e digitos
-        "1234a",  /// 4 digitos e 1 letra
-        "Z9x8Y"   /// 5 caracteres validos
+        "a1B2c",
+        "1234a",
+        "Z9x8Y"
     };
-
     for (const auto& s : validos) {
         testarSenhaValida(s);
     }
 
     std::cout << "\n=== TESTES DE SENHA INVALIDOS ===" << std::endl;
     invalidos = {
-        "1234",    /// Menos de 5 caracteres
-        "123456",  /// Mais de 5 caracteres
-        "abcde",   /// Apenas letras (falta digito)
-        "12345",   /// Apenas digitos (falta letra)
-        "a1B2#",   /// Contem caractere especial '#'
-        "a 1B2"    /// Contem espaco em branco
+        "1234",
+        "123456",
+        "abcde",
+        "12345",
+        "a1B2#",
+        "a 1B2"
     };
-
     for (const auto& s : invalidos) {
         testarSenhaInvalida(s);
     }
 
-    //=====================================
+    // =============================================
     // PAPEL
-    //=====================================
+    // =============================================
     std::cout << "\n=== TESTES DE PAPEL VALIDOS ===" << std::endl;
     validos = {
         "GESTOR",
         "DESENVOLVEDOR"
     };
-
     for (const auto& p : validos) {
         testarPapelValido(p);
     }
 
     std::cout << "\n=== TESTES DE PAPEL INVALIDOS ===" << std::endl;
     invalidos = {
-        "gestor",        /// Minusculo nao e permitido
-        "desenvolvedor", /// Minusculo nao e permitido
-        "ADMINISTRADOR", /// Valor inexistente no dominio
-        "GESTOR "        /// Espaco no final
+        "gestor",
+        "desenvolvedor",
+        "ADMINISTRADOR",
+        "GESTOR "
     };
-
     for (const auto& p : invalidos) {
         testarPapelInvalido(p);
     }
 
-    //=====================================
+    // =============================================
     // PRIORIDADE
-    //=====================================
+    // =============================================
     std::cout << "\n=== TESTES DE PRIORIDADE VALIDOS ===" << std::endl;
     validos = {
         "ALTA",
         "MEDIA",
         "BAIXA"
     };
-
     for (const auto& p : validos) {
         testarPrioridadeValida(p);
     }
 
     std::cout << "\n=== TESTES DE PRIORIDADE INVALIDOS ===" << std::endl;
     invalidos = {
-        "alta",     /// Minusculo nao e permitido
-        "Média",    /// Com acento/minusculo
-        "URGENTE",  /// Valor inexistente no dominio
-        "BAIXA "    /// Espaco no final
+        "alta",
+        "Média",
+        "URGENTE",
+        "BAIXA "
     };
-
     for (const auto& p : invalidos) {
         testarPrioridadeInvalida(p);
     }
-    //=====================================
+
+    // =============================================
     // LIMITE
-    //=====================================
-
+    // =============================================
     std::cout << "\n=== TESTES DE LIMITE VALIDOS ===" << std::endl;
-
     std::vector<int> limitesValidos = {
         1,
         5,
@@ -689,13 +743,11 @@ int main() {
         20,
         25
     };
-
     for (const auto& l : limitesValidos) {
         testarLimiteValido(l);
     }
 
     std::cout << "\n=== TESTES DE LIMITE INVALIDOS ===" << std::endl;
-
     std::vector<int> limitesInvalidos = {
         0,
         -1,
@@ -703,17 +755,14 @@ int main() {
         50,
         100
     };
-
     for (const auto& l : limitesInvalidos) {
         testarLimiteInvalido(l);
     }
 
-    //=====================================
+    // =============================================
     // NOME
-    //=====================================
-
+    // =============================================
     std::cout << "\n=== TESTES DE NOME VALIDOS ===" << std::endl;
-
     validos = {
         "Joao",
         "Maria",
@@ -721,28 +770,39 @@ int main() {
         "Ana Clara",
         "Jose Carlos"
     };
-
     for (const auto& nome : validos) {
         testarNomeValido(nome);
     }
 
     std::cout << "\n=== TESTES DE NOME INVALIDOS ===" << std::endl;
-
     invalidos = {
         "",
-        " Pedro",            // inicia com espaço
-        "Pedro ",            // termina com espaço
-        "Pedro  Silva",      // espaço seguido de espaço
-        "Pedro123",          // contém números
-        "Pedro@",            // caractere especial
-        "NomeMuitoGrandeDemais" // mais de 15 caracteres
+        " Pedro",
+        "Pedro ",
+        "Pedro  Silva",
+        "Pedro123",
+        "Pedro@",
+        "NomeMuitoGrandeDemais"
     };
-
     for (const auto& nome : invalidos) {
         testarNomeInvalido(nome);
     }
 
     testarEntidades();
+    testarPessoaContainerEServico();
+
+    // =============================================
+    // MENU INTERATIVO NO TERMINAL (OPCIONAL)
+    // =============================================
+    char abrirMenu = 'n';
+    std::cout << "\nDeseja abrir o menu interativo de Pessoa no terminal? (s/n): ";
+    std::cin >> abrirMenu;
+
+    if (abrirMenu == 's' || abrirMenu == 'S') {
+        PessoaService servicoTerminal;
+        PessoaController controlador(&servicoTerminal);
+        controlador.executar();
+    }
 
     return 0;
 }
