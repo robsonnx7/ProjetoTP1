@@ -51,7 +51,7 @@
 		<Unit filename="include/dominio/Timestamp.h" />
 		<Unit filename="include/serviço/containers/PessoaContainer.h" />
 		<Unit filename="include/serviço/implementação/PessoaService.h" />
-		<Unit filename="include/serviço/interfaces/PessoaServiceInt.h" />
+		<Unit filename="include/serviço/interfaces/IPessoaService.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/apresentação/PessoaController.cpp" />
 		<Unit filename="src/dominio/CartaoAtividade.cpp" />
