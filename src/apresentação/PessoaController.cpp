@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "PessoaController.h"
-#include "PessoaServiceInt.h"
+#include "IPessoaService.h"
 #include "Pessoa.h"
 #include "Email.h"
 #include "Nome.h"
@@ -113,7 +113,7 @@ void exibirPessoa(const Pessoa& pessoa) {
 
 } // namespace
 
-PessoaController::PessoaController(PessoaServiceInt* servico)
+PessoaController::PessoaController(IPessoaService* servico)
     : servico(servico) {}
 
 void PessoaController::executar() {

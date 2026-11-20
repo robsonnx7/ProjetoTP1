@@ -1,13 +1,18 @@
 #ifndef PESSOASERVICE_H
 #define PESSOASERVICE_H
 
+#include <string>
 #include <vector>
-#include "PessoaServiceInt.h"
+#include "IPessoaService.h"
 #include "Pessoa.h"
 #include "Email.h"
 #include "Papel.h"
 
-class PessoaService : public PessoaServiceInt {
+/**
+ * @file PessoaService.h
+ * @brief Declaração da implementação concreta de IPessoaService.
+ */
+class PessoaService : public IPessoaService {
 private:
     std::vector<Pessoa> pessoas;
 
