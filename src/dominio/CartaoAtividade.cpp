@@ -193,3 +193,39 @@ void CartaoAtividade::setTermino(const Timestamp& termino) {
 Timestamp CartaoAtividade::getTermino() const {
     return termino;
 }
+
+/**
+ * @brief Define o identificador do quadro vinculado ao cartão.
+ *
+ * @param idQuadro Identificador validado do quadro.
+ */
+void CartaoAtividade::setIdQuadro(const Identificador& idQuadro) {
+    this->idQuadro = idQuadro;
+}
+
+/**
+ * @brief Obtém o identificador do quadro vinculado ao cartão.
+ *
+ * @return Identificador do quadro associado ao cartão.
+ */
+Identificador CartaoAtividade::getIdQuadro() const {
+    return idQuadro;
+}
+
+/**
+ * @brief Define o e-mail do desenvolvedor responsável pelo cartão.
+ *
+ * @param emailDesenvolvedor E-mail validado da pessoa desenvolvedora.
+ */
+void CartaoAtividade::setEmailDesenvolvedor(const Email& emailDesenvolvedor) {
+    this->emailDesenvolvedor = emailDesenvolvedor;
+}
+
+/**
+ * @brief Obtém o e-mail do desenvolvedor responsável pelo cartão.
+ *
+ * @return E-mail do desenvolvedor associado ao cartão.
+ */
+Email CartaoAtividade::getEmailDesenvolvedor() const {
+    return emailDesenvolvedor;
+}

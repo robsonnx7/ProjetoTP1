@@ -16,16 +16,18 @@
  * @brief Representa um quadro dentro de um projeto.
  *
  * Um quadro possui um identificador único, um nome
- * descritivo e um limite de WIP ("Work in Progress"/ trabalho em progresso).
+ * descritivo, um limite de WIP ("Work in Progress"/ trabalho em progresso)
+ * e o identificador do projeto ao qual pertence.
  */
 class Quadro {
 private:
-    Identificador identificador; ///< Identificador único do quadro"necessário citar 2".
+    Identificador identificador; ///< Identificador único do quadro.
 
-    Nome nome;                   ///< Nome descritivo do quadro "necessário citar 2".
+    Nome nome;                   ///< Nome descritivo do quadro.
 
-    Limite limite;               ///< Limite de cartões em andamento (WIP) permitido no quadro[cite: 2, 3].
+    Limite limite;               ///< Limite de cartões em andamento (WIP) permitido no quadro.
 
+    Identificador idProjeto;     ///< Identificador do projeto ao qual o quadro pertence.
 
 public:
     /**
@@ -69,6 +71,18 @@ public:
      * @return Objeto Limite contido no quadro.
      */
     Limite getLimite() const;
+
+    /**
+     * @brief Define o identificador do projeto vinculado ao quadro.
+     * @param idProjeto Objeto do tipo Identificador validado.
+     */
+    void setIdProjeto(const Identificador& idProjeto);
+
+    /**
+     * @brief Retorna o identificador do projeto vinculado ao quadro.
+     * @return Objeto Identificador do projeto.
+     */
+    Identificador getIdProjeto() const;
 };
 
 #endif // QUADRO_H

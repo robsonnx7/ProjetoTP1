@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <limits>
 #include <stdexcept>
 
 #include "Email.h"
@@ -21,8 +22,24 @@
 #include "Pessoa.h"
 
 #include "PessoaContainer.h"
+#include "ProjetoContainer.h"
+#include "QuadroContainer.h"
+#include "CartaoAtividadeContainer.h"
+
+#include "IPessoaService.h"
+#include "IProjetoService.h"
+#include "IQuadroService.h"
+#include "ICartaoAtividadeService.h"
+
 #include "PessoaService.h"
+#include "ProjetoService.h"
+#include "QuadroService.h"
+#include "CartaoAtividadeService.h"
+
 #include "PessoaController.h"
+#include "ProjetoController.h"
+#include "QuadroController.h"
+#include "CartaoAtividadeController.h"
 
 // ==================================================
 // TESTES EMAIL
@@ -446,7 +463,7 @@ void testarPessoaContainerEServico() {
                   << " Remover p1 do container\n";
 
         // 2. Testes no PessoaService
-        PessoaService servico;
+        PessoaService servico(&container);
         Papel gestor("GESTOR");
         Papel dev("DESENVOLVEDOR");
 
@@ -489,6 +506,80 @@ void testarPessoaContainerEServico() {
         std::cout << "[ERRO] Falha inesperada em PessoaContainer/PessoaService: "
                   << e.what() << std::endl;
     }
+}
+
+// ==================================================
+// MENUS INTERATIVOS POR PARTE (HIERARQUIA)
+// ==================================================
+
+void limparBufferMenuPrincipal() {
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+void executarMenusModulos() {
+    PessoaContainer containerPessoa;
+    ProjetoContainer containerProjeto;
+    QuadroContainer containerQuadro;
+    CartaoAtividadeContainer containerCartao;
+
+    PessoaService servicoPessoa(&containerPessoa, &containerProjeto, &containerCartao);
+    ProjetoService servicoProjeto(&containerProjeto, &servicoPessoa, &containerQuadro);
+    QuadroService servicoQuadro(&containerQuadro, &containerProjeto, &containerCartao);
+    CartaoAtividadeService servicoCartao(&containerCartao, &containerQuadro, &containerPessoa);
+
+    IPessoaService* ptrPessoaService = &servicoPessoa;
+    IProjetoService* ptrProjetoService = &servicoProjeto;
+    IQuadroService* ptrQuadroService = &servicoQuadro;
+    ICartaoAtividadeService* ptrCartaoService = &servicoCartao;
+
+    PessoaController controladorPessoa(ptrPessoaService);
+    ProjetoController controladorProjeto(ptrProjetoService);
+    QuadroController controladorQuadro(ptrQuadroService);
+    CartaoAtividadeController controladorCartao(ptrCartaoService);
+
+    int opcao = -1;
+    do {
+        std::cout << "\n============================================\n"
+                  << "MENU PRINCIPAL - SELECIONE A PARTE\n"
+                  << "Hierarquia criacao : Pessoa -> Projeto -> Quadro -> Cartao\n"
+                  << "Hierarquia exclusao: Cartao -> Quadro -> Projeto -> Pessoa\n"
+                  << "============================================\n"
+                  << "1. Parte Pessoa\n"
+                  << "2. Parte Projeto\n"
+                  << "3. Parte Quadro\n"
+                  << "4. Parte Cartao de Atividade\n"
+                  << "0. Voltar / Encerrar\n"
+                  << "Escolha: ";
+
+        if (!(std::cin >> opcao)) {
+            limparBufferMenuPrincipal();
+            std::cout << "Entrada invalida.\n";
+            continue;
+        }
+        limparBufferMenuPrincipal();
+
+        switch (opcao) {
+            case 1:
+                controladorPessoa.executar();
+                break;
+            case 2:
+                controladorProjeto.executar();
+                break;
+            case 3:
+                controladorQuadro.executar();
+                break;
+            case 4:
+                controladorCartao.executar();
+                break;
+            case 0:
+                std::cout << "Saindo do menu de partes...\n";
+                break;
+            default:
+                std::cout << "Opcao invalida.\n";
+                break;
+        }
+    } while (opcao != 0);
 }
 
 // ==================================================
@@ -792,16 +883,15 @@ int main() {
     testarPessoaContainerEServico();
 
     // =============================================
-    // MENU INTERATIVO NO TERMINAL (OPCIONAL)
+    // MENU INTERATIVO NO TERMINAL POR PARTE
     // =============================================
     char abrirMenu = 'n';
-    std::cout << "\nDeseja abrir o menu interativo de Pessoa no terminal? (s/n): ";
+    std::cout << "\nDeseja abrir o menu interativo das partes no terminal? (s/n): ";
     std::cin >> abrirMenu;
+    limparBufferMenuPrincipal();
 
     if (abrirMenu == 's' || abrirMenu == 'S') {
-        PessoaService servicoTerminal;
-        PessoaController controlador(&servicoTerminal);
-        controlador.executar();
+        executarMenusModulos();
     }
 
     return 0;

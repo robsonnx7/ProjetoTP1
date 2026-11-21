@@ -1,0 +1,218 @@
+#include <iostream>
+#include <limits>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+#include "QuadroController.h"
+#include "Identificador.h"
+#include "Nome.h"
+#include "Limite.h"
+#include "Papel.h"
+
+namespace {
+
+void limparBufferQuad() {
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+std::string lerLinhaQuad(const std::string& rotulo) {
+    std::string entrada;
+    std::cout << rotulo;
+    std::getline(std::cin >> std::ws, entrada);
+    return entrada;
+}
+
+bool lerPapelQuad(Papel& saida) {
+    while (true) {
+        try {
+            saida.setValor(lerLinhaQuad("Papel do solicitante (GESTOR ou DESENVOLVEDOR): "));
+            return true;
+        } catch (const std::invalid_argument& e) {
+            std::cout << "Erro: " << e.what() << "\n";
+        }
+    }
+}
+
+bool lerIdQuad(Identificador& saida, const std::string& rotulo = "Identificador do quadro: ") {
+    while (true) {
+        try {
+            saida.setValor(lerLinhaQuad(rotulo));
+            return true;
+        } catch (const std::invalid_argument& e) {
+            std::cout << "Erro: " << e.what() << "\n";
+        }
+    }
+}
+
+bool lerDadosQuadro(Quadro& quadro, bool exigirId = true) {
+    if (exigirId) {
+        Identificador id;
+        if (!lerIdQuad(id, "Identificador do quadro: ")) return false;
+        quadro.setIdentificador(id);
+    }
+
+    while (true) {
+        try {
+            Nome nome;
+            nome.setValor(lerLinhaQuad("Nome do quadro: "));
+            quadro.setNome(nome);
+            break;
+        } catch (const std::invalid_argument& e) {
+            std::cout << "Erro: " << e.what() << "\n";
+        }
+    }
+
+    while (true) {
+        std::cout << "Limite WIP (1 a 25): ";
+        int valorLimite = 0;
+        if (!(std::cin >> valorLimite)) {
+            limparBufferQuad();
+            std::cout << "Erro: digite um numero inteiro valido.\n";
+            continue;
+        }
+        limparBufferQuad();
+
+        try {
+            Limite limite;
+            limite.setValor(valorLimite);
+            quadro.setLimite(limite);
+            break;
+        } catch (const std::invalid_argument& e) {
+            std::cout << "Erro: " << e.what() << "\n";
+        }
+    }
+
+    Identificador idProj;
+    if (!lerIdQuad(idProj, "Identificador do projeto vinculado: ")) return false;
+    quadro.setIdProjeto(idProj);
+
+    return true;
+}
+
+void exibirQuadro(const Quadro& q) {
+    std::cout << "-------------------------------------\n"
+              << "ID Quadro  : " << q.getIdentificador().getValor() << "\n"
+              << "Nome       : " << q.getNome().getValor() << "\n"
+              << "Limite WIP : " << q.getLimite().getValor() << "\n"
+              << "ID Projeto : " << q.getIdProjeto().getValor() << "\n"
+              << "-------------------------------------\n";
+}
+
+} // namespace
+
+QuadroController::QuadroController(IQuadroService* servico)
+    : servico(servico) {}
+
+void QuadroController::executar() {
+    if (servico == nullptr) {
+        std::cout << "Erro: servico de quadro nao configurado.\n";
+        return;
+    }
+
+    int opcao = -1;
+    do {
+        std::cout << "\n=== MENU QUADRO ===\n"
+                  << "1. Criar quadro\n"
+                  << "2. Buscar quadro por ID\n"
+                  << "3. Atualizar quadro\n"
+                  << "4. Excluir quadro\n"
+                  << "5. Listar quadros\n"
+                  << "0. Voltar\n"
+                  << "Escolha: ";
+
+        if (!(std::cin >> opcao)) {
+            limparBufferQuad();
+            std::cout << "Entrada invalida.\n";
+            continue;
+        }
+        limparBufferQuad();
+
+        switch (opcao) {
+            case 1: {
+                Papel papelSol;
+                if (!lerPapelQuad(papelSol)) break;
+
+                Quadro novoQuadro;
+                if (!lerDadosQuadro(novoQuadro, true)) break;
+
+                if (servico->criar(novoQuadro, papelSol)) {
+                    std::cout << "Quadro criado com sucesso.\n";
+                } else {
+                    std::cout << "Nao foi possivel criar (verifique se o projeto existe ou se o ID ja existe).\n";
+                }
+                break;
+            }
+            case 2: {
+                Papel papelSol;
+                if (!lerPapelQuad(papelSol)) break;
+
+                Identificador id;
+                if (!lerIdQuad(id)) break;
+
+                Quadro consulta;
+                consulta.setIdentificador(id);
+
+                if (servico->ler(&consulta, papelSol)) {
+                    exibirQuadro(consulta);
+                } else {
+                    std::cout << "Quadro nao encontrado.\n";
+                }
+                break;
+            }
+            case 3: {
+                Papel papelSol;
+                if (!lerPapelQuad(papelSol)) break;
+
+                Quadro quadroAtualizado;
+                if (!lerDadosQuadro(quadroAtualizado, true)) break;
+
+                if (servico->atualizar(quadroAtualizado, papelSol)) {
+                    std::cout << "Quadro atualizado com sucesso.\n";
+                } else {
+                    std::cout << "Nao foi possivel atualizar.\n";
+                }
+                break;
+            }
+            case 4: {
+                Papel papelSol;
+                if (!lerPapelQuad(papelSol)) break;
+
+                Identificador id;
+                if (!lerIdQuad(id)) break;
+
+                if (servico->excluir(id, papelSol)) {
+                    std::cout << "Quadro excluido com sucesso.\n";
+                } else {
+                    std::cout << "Nao foi possivel excluir (verifique se ha cartoes vinculados ou se o ID existe).\n";
+                }
+                break;
+            }
+            case 5: {
+                Papel papelSol;
+                if (!lerPapelQuad(papelSol)) break;
+
+                std::vector<Quadro> lista;
+                if (servico->listar(&lista, papelSol)) {
+                    if (lista.empty()) {
+                        std::cout << "Nenhum quadro cadastrado.\n";
+                    } else {
+                        for (const auto& q : lista) {
+                            exibirQuadro(q);
+                        }
+                    }
+                } else {
+                    std::cout << "Nao foi possivel listar quadros.\n";
+                }
+                break;
+            }
+            case 0:
+                std::cout << "Saindo do menu de quadro...\n";
+                break;
+            default:
+                std::cout << "Opcao invalida.\n";
+                break;
+        }
+    } while (opcao != 0);
+}
