@@ -109,3 +109,21 @@ void Projeto::setTermino(const Timestamp& termino) {
 Timestamp Projeto::getTermino() const {
     return termino;
 }
+
+/**
+ * @brief Define o e-mail do gestor responsável pelo projeto.
+ *
+ * @param emailGestor E-mail validado da pessoa gestora.
+ */
+void Projeto::setEmailGestor(const Email& emailGestor) {
+    this->emailGestor = emailGestor;
+}
+
+/**
+ * @brief Obtém o e-mail do gestor responsável pelo projeto.
+ *
+ * @return E-mail do gestor associado ao projeto.
+ */
+Email Projeto::getEmailGestor() const {
+    return emailGestor;
+}

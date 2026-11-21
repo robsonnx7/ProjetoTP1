@@ -70,3 +70,21 @@ void Quadro::setLimite(const Limite& limite) {
 Limite Quadro::getLimite() const {
     return limite;
 }
+
+/**
+ * @brief Define o identificador do projeto vinculado ao quadro.
+ *
+ * @param idProjeto Identificador validado do projeto.
+ */
+void Quadro::setIdProjeto(const Identificador& idProjeto) {
+    this->idProjeto = idProjeto;
+}
+
+/**
+ * @brief Obtém o identificador do projeto vinculado ao quadro.
+ *
+ * @return Identificador do projeto associado ao quadro.
+ */
+Identificador Quadro::getIdProjeto() const {
+    return idProjeto;
+}

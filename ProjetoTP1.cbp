@@ -40,7 +40,10 @@
 			<Add option="-fexceptions" />
 			<Add directory="include/dominio" />
 		</Compiler>
+		<Unit filename="include/apresentação/CartaoAtividadeController.h" />
 		<Unit filename="include/apresentação/PessoaController.h" />
+		<Unit filename="include/apresentação/ProjetoController.h" />
+		<Unit filename="include/apresentação/QuadroController.h" />
 		<Unit filename="include/dominio/CartaoAtividade.h" />
 		<Unit filename="include/dominio/Email.h" />
 		<Unit filename="include/dominio/Estado.h" />
@@ -56,11 +59,23 @@
 		<Unit filename="include/dominio/Tamanho.h" />
 		<Unit filename="include/dominio/Texto.h" />
 		<Unit filename="include/dominio/Timestamp.h" />
+		<Unit filename="include/serviço/containers/CartaoAtividadeContainer.h" />
 		<Unit filename="include/serviço/containers/PessoaContainer.h" />
+		<Unit filename="include/serviço/containers/ProjetoContainer.h" />
+		<Unit filename="include/serviço/containers/QuadroContainer.h" />
+		<Unit filename="include/serviço/implementação/CartaoAtividadeService.h" />
 		<Unit filename="include/serviço/implementação/PessoaService.h" />
+		<Unit filename="include/serviço/implementação/ProjetoService.h" />
+		<Unit filename="include/serviço/implementação/QuadroService.h" />
+		<Unit filename="include/serviço/interfaces/ICartaoAtividadeService.h" />
 		<Unit filename="include/serviço/interfaces/IPessoaService.h" />
+		<Unit filename="include/serviço/interfaces/IProjetoService.h" />
+		<Unit filename="include/serviço/interfaces/IQuadroService.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/apresentação/CartaoAtividadeController.cpp" />
 		<Unit filename="src/apresentação/PessoaController.cpp" />
+		<Unit filename="src/apresentação/ProjetoController.cpp" />
+		<Unit filename="src/apresentação/QuadroController.cpp" />
 		<Unit filename="src/dominio/CartaoAtividade.cpp" />
 		<Unit filename="src/dominio/Email.cpp" />
 		<Unit filename="src/dominio/Estado.cpp" />
@@ -76,8 +91,14 @@
 		<Unit filename="src/dominio/Tamanho.cpp" />
 		<Unit filename="src/dominio/Texto.cpp" />
 		<Unit filename="src/dominio/Timestamp.cpp" />
+		<Unit filename="src/serviço/CartaoAtividadeContainer.cpp" />
+		<Unit filename="src/serviço/CartaoAtividadeService.cpp" />
 		<Unit filename="src/serviço/PessoaContainer.cpp" />
 		<Unit filename="src/serviço/PessoaService.cpp" />
+		<Unit filename="src/serviço/ProjetoContainer.cpp" />
+		<Unit filename="src/serviço/ProjetoService.cpp" />
+		<Unit filename="src/serviço/QuadroContainer.cpp" />
+		<Unit filename="src/serviço/QuadroService.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

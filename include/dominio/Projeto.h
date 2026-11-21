@@ -6,6 +6,7 @@
 #include "Nome.h"
 #include "Texto.h"
 #include "Timestamp.h"
+#include "Email.h"
 
 /**
  * @file Projeto.h
@@ -17,7 +18,7 @@
  * @brief Representa um projeto no sistema de gestão de projetos.
  *
  * Um projeto possui um identificador único (chave primária), um nome,
- * uma descrição detalhada e datas de início e término.
+ * uma descrição detalhada, datas de início e término e o e-mail do gestor.
  */
 class Projeto {
 private:
@@ -30,6 +31,8 @@ private:
     Timestamp inicio;            ///< Data e horário de início do projeto.
 
     Timestamp termino;           ///< Data e horário de término do projeto.
+
+    Email emailGestor;           ///< E-mail da Pessoa que atua como Gestor do projeto.
 
 public:
     /**
@@ -97,6 +100,18 @@ public:
      * @return Objeto Timestamp de término.
      */
     Timestamp getTermino() const;
+
+    /**
+     * @brief Define o e-mail do gestor responsável pelo projeto.
+     * @param emailGestor Objeto do tipo Email validado.
+     */
+    void setEmailGestor(const Email& emailGestor);
+
+    /**
+     * @brief Retorna o e-mail do gestor responsável pelo projeto.
+     * @return Objeto Email do gestor.
+     */
+    Email getEmailGestor() const;
 };
 
 #endif // PROJETO_H

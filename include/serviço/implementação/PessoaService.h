@@ -1,26 +1,32 @@
 #ifndef PESSOASERVICE_H
 #define PESSOASERVICE_H
 
-#include <string>
 #include <vector>
 #include "IPessoaService.h"
+#include "PessoaContainer.h"
+#include "ProjetoContainer.h"
+#include "CartaoAtividadeContainer.h"
 #include "Pessoa.h"
 #include "Email.h"
 #include "Papel.h"
 
 /**
  * @file PessoaService.h
- * @brief Declaração da implementação concreta de IPessoaService.
+ * @brief Implementacao concreta de IPessoaService.
  */
 class PessoaService : public IPessoaService {
 private:
-    std::vector<Pessoa> pessoas;
+    PessoaContainer* pessoaContainer;
+    ProjetoContainer* projetoContainer;
+    CartaoAtividadeContainer* cartaoContainer;
 
     bool temPermissao(Papel papelSolicitante) const;
-    int buscarIndicePorEmail(const Email& email) const;
+    bool possuiVinculosAtivos(const Email& email) const;
 
 public:
-    PessoaService() = default;
+    explicit PessoaService(PessoaContainer* pessoaContainer = nullptr,
+                           ProjetoContainer* projetoContainer = nullptr,
+                           CartaoAtividadeContainer* cartaoContainer = nullptr);
 
     bool criar(const Pessoa& pessoa, Papel papelSolicitante) override;
     bool ler(Pessoa* pessoa, Papel papelSolicitante) override;

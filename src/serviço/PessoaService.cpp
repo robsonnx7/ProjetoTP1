@@ -1,85 +1,64 @@
 #include "PessoaService.h"
 
-/**
- * @file PessoaService.cpp
- * @brief Implementação dos métodos da classe PessoaService.
- */
+PessoaService::PessoaService(PessoaContainer* pessoaContainer,
+                             ProjetoContainer* projetoContainer,
+                             CartaoAtividadeContainer* cartaoContainer)
+    : pessoaContainer(pessoaContainer),
+      projetoContainer(projetoContainer),
+      cartaoContainer(cartaoContainer) {}
 
 bool PessoaService::temPermissao(Papel papelSolicitante) const {
-    const std::string valorPapel = papelSolicitante.getValor();
-    return valorPapel == "GESTOR" || valorPapel == "DESENVOLVEDOR";
+    return papelSolicitante.getValor() == "GESTOR" ||
+           papelSolicitante.getValor() == "DESENVOLVEDOR";
 }
 
-int PessoaService::buscarIndicePorEmail(const Email& email) const {
-    for (size_t i = 0; i < pessoas.size(); ++i) {
-        if (pessoas[i].getEmail().getValor() == email.getValor()) {
-            return static_cast<int>(i);
-        }
+bool PessoaService::possuiVinculosAtivos(const Email& email) const {
+    // Na ordem de exclusao (Cartao -> Quadro -> Projeto -> Pessoa),
+    // Pessoa so pode ser removida quando nao ha projetos (como gestor)
+    // nem cartoes de atividade (como desenvolvedor) vinculados a ela[cite: 6].
+    if (projetoContainer != nullptr && projetoContainer->existePorGestor(email)) {
+        return true;
     }
-    return -1;
+    if (cartaoContainer != nullptr && cartaoContainer->existePorDesenvolvedor(email)) {
+        return true;
+    }
+    return false;
 }
 
 bool PessoaService::criar(const Pessoa& pessoa, Papel papelSolicitante) {
-    if (!temPermissao(papelSolicitante)) {
+    if (pessoaContainer == nullptr || !temPermissao(papelSolicitante)) {
         return false;
     }
-
-    if (pessoa.getEmail().getValor().empty() ||
-        buscarIndicePorEmail(pessoa.getEmail()) != -1) {
-        return false;
-    }
-
-    pessoas.push_back(pessoa);
-    return true;
+    return pessoaContainer->inserir(pessoa);
 }
 
 bool PessoaService::ler(Pessoa* pessoa, Papel papelSolicitante) {
-    if (!temPermissao(papelSolicitante) || pessoa == nullptr) {
+    if (pessoaContainer == nullptr || pessoa == nullptr || !temPermissao(papelSolicitante)) {
         return false;
     }
-
-    int indice = buscarIndicePorEmail(pessoa->getEmail());
-    if (indice == -1) {
-        return false;
-    }
-
-    *pessoa = pessoas[indice];
-    return true;
+    return pessoaContainer->buscar(pessoa);
 }
 
 bool PessoaService::atualizar(const Pessoa& pessoa, Papel papelSolicitante) {
-    if (!temPermissao(papelSolicitante)) {
+    if (pessoaContainer == nullptr || !temPermissao(papelSolicitante)) {
         return false;
     }
-
-    int indice = buscarIndicePorEmail(pessoa.getEmail());
-    if (indice == -1) {
-        return false;
-    }
-
-    pessoas[indice] = pessoa;
-    return true;
+    return pessoaContainer->atualizar(pessoa);
 }
 
 bool PessoaService::excluir(const Email& email, Papel papelSolicitante) {
-    if (!temPermissao(papelSolicitante)) {
+    if (pessoaContainer == nullptr || !temPermissao(papelSolicitante)) {
         return false;
     }
-
-    int indice = buscarIndicePorEmail(email);
-    if (indice == -1) {
+    if (possuiVinculosAtivos(email)) {
         return false;
     }
-
-    pessoas.erase(pessoas.begin() + indice);
-    return true;
+    return pessoaContainer->remover(email);
 }
 
 bool PessoaService::listar(std::vector<Pessoa>* pessoasSaida, Papel papelSolicitante) {
-    if (!temPermissao(papelSolicitante) || pessoasSaida == nullptr) {
+    if (pessoaContainer == nullptr || pessoasSaida == nullptr || !temPermissao(papelSolicitante)) {
         return false;
     }
-
-    *pessoasSaida = pessoas;
-    return true;
+    return pessoaContainer->listar(pessoasSaida);
 }
