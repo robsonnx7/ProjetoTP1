@@ -2,6 +2,7 @@
 #define CARTAOATIVIDADECONTROLLER_H
 
 #include "ICartaoAtividadeService.h"
+#include "Papel.h"
 
 /**
  * @file CartaoAtividadeController.h
@@ -14,7 +15,7 @@ private:
 public:
     explicit CartaoAtividadeController(ICartaoAtividadeService* servico);
 
-    void executar();
+    void executar(const Papel& papelSolicitante);
 
     ~CartaoAtividadeController() = default;
 };

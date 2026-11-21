@@ -23,7 +23,7 @@ bool QuadroService::possuiCartoesVinculados(const Identificador& idQuadro) const
 }
 
 bool QuadroService::criar(const Quadro& quadro, Papel papelSolicitante) {
-    (void)papelSolicitante;
+    if (papelSolicitante.getValor() != "GESTOR") return false;
     if (quadroContainer == nullptr) {
         return false;
     }
@@ -42,7 +42,7 @@ bool QuadroService::ler(Quadro* quadro, Papel papelSolicitante) {
 }
 
 bool QuadroService::atualizar(const Quadro& quadro, Papel papelSolicitante) {
-    (void)papelSolicitante;
+    if (papelSolicitante.getValor() != "GESTOR") return false;
     if (quadroContainer == nullptr) {
         return false;
     }
@@ -53,7 +53,7 @@ bool QuadroService::atualizar(const Quadro& quadro, Papel papelSolicitante) {
 }
 
 bool QuadroService::excluir(const Identificador& id, Papel papelSolicitante) {
-    (void)papelSolicitante;
+    if (papelSolicitante.getValor() != "GESTOR") return false;
     if (quadroContainer == nullptr) {
         return false;
     }

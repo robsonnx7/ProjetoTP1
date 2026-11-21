@@ -26,17 +26,6 @@ std::string lerLinhaProj(const std::string& rotulo) {
     return entrada;
 }
 
-bool lerPapelProj(Papel& saida) {
-    while (true) {
-        try {
-            saida.setValor(lerLinhaProj("Papel do solicitante (GESTOR ou DESENVOLVEDOR): "));
-            return true;
-        } catch (const std::invalid_argument& e) {
-            std::cout << "Erro: " << e.what() << "\n";
-        }
-    }
-}
-
 bool lerIdProj(Identificador& saida) {
     while (true) {
         try {
@@ -129,7 +118,7 @@ void exibirProjeto(const Projeto& p) {
 ProjetoController::ProjetoController(IProjetoService* servico)
     : servico(servico) {}
 
-void ProjetoController::executar() {
+void ProjetoController::executar(const Papel& papelSolicitante) {
     if (servico == nullptr) {
         std::cout << "Erro: servico de projeto nao configurado.\n";
         return;
@@ -155,8 +144,7 @@ void ProjetoController::executar() {
 
         switch (opcao) {
             case 1: {
-                Papel papelSol;
-                if (!lerPapelProj(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Projeto novoProj;
                 if (!lerDadosProjeto(novoProj, true)) break;
@@ -169,8 +157,7 @@ void ProjetoController::executar() {
                 break;
             }
             case 2: {
-                Papel papelSol;
-                if (!lerPapelProj(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Identificador id;
                 if (!lerIdProj(id)) break;
@@ -186,8 +173,7 @@ void ProjetoController::executar() {
                 break;
             }
             case 3: {
-                Papel papelSol;
-                if (!lerPapelProj(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Projeto projAtualizado;
                 if (!lerDadosProjeto(projAtualizado, true)) break;
@@ -200,8 +186,7 @@ void ProjetoController::executar() {
                 break;
             }
             case 4: {
-                Papel papelSol;
-                if (!lerPapelProj(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Identificador id;
                 if (!lerIdProj(id)) break;
@@ -214,8 +199,7 @@ void ProjetoController::executar() {
                 break;
             }
             case 5: {
-                Papel papelSol;
-                if (!lerPapelProj(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 std::vector<Projeto> lista;
                 if (servico->listar(&lista, papelSol)) {

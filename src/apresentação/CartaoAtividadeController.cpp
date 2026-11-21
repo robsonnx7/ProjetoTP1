@@ -29,17 +29,6 @@ std::string lerLinhaCart(const std::string& rotulo) {
     return entrada;
 }
 
-bool lerPapelCart(Papel& saida) {
-    while (true) {
-        try {
-            saida.setValor(lerLinhaCart("Papel do solicitante (GESTOR ou DESENVOLVEDOR): "));
-            return true;
-        } catch (const std::invalid_argument& e) {
-            std::cout << "Erro: " << e.what() << "\n";
-        }
-    }
-}
-
 bool lerIdCart(Identificador& saida, const std::string& rotulo) {
     while (true) {
         try {
@@ -185,7 +174,7 @@ void exibirCartao(const CartaoAtividade& c) {
 CartaoAtividadeController::CartaoAtividadeController(ICartaoAtividadeService* servico)
     : servico(servico) {}
 
-void CartaoAtividadeController::executar() {
+void CartaoAtividadeController::executar(const Papel& papelSolicitante) {
     if (servico == nullptr) {
         std::cout << "Erro: servico de cartao de atividade nao configurado.\n";
         return;
@@ -211,8 +200,7 @@ void CartaoAtividadeController::executar() {
 
         switch (opcao) {
             case 1: {
-                Papel papelSol;
-                if (!lerPapelCart(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 CartaoAtividade novoCartao;
                 if (!lerDadosCartao(novoCartao, true)) break;
@@ -225,8 +213,7 @@ void CartaoAtividadeController::executar() {
                 break;
             }
             case 2: {
-                Papel papelSol;
-                if (!lerPapelCart(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Identificador id;
                 if (!lerIdCart(id, "Identificador do cartao: ")) break;
@@ -242,8 +229,7 @@ void CartaoAtividadeController::executar() {
                 break;
             }
             case 3: {
-                Papel papelSol;
-                if (!lerPapelCart(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 CartaoAtividade cartaoAtualizado;
                 if (!lerDadosCartao(cartaoAtualizado, true)) break;
@@ -256,8 +242,7 @@ void CartaoAtividadeController::executar() {
                 break;
             }
             case 4: {
-                Papel papelSol;
-                if (!lerPapelCart(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Identificador id;
                 if (!lerIdCart(id, "Identificador do cartao: ")) break;
@@ -270,8 +255,7 @@ void CartaoAtividadeController::executar() {
                 break;
             }
             case 5: {
-                Papel papelSol;
-                if (!lerPapelCart(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 std::vector<CartaoAtividade> lista;
                 if (servico->listar(&lista, papelSol)) {

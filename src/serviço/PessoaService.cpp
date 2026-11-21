@@ -25,6 +25,25 @@ bool PessoaService::possuiVinculosAtivos(const Email& email) const {
     return false;
 }
 
+bool PessoaService::autenticar(const Email& email, const Senha& senha, Pessoa* pessoaAutenticada) {
+    if (pessoaContainer == nullptr || pessoaAutenticada == nullptr) {
+        return false;
+    }
+
+    Pessoa consulta;
+    consulta.setEmail(email);
+    if (!pessoaContainer->buscar(&consulta)) {
+        return false;
+    }
+
+    if (consulta.getSenha().getValor() != senha.getValor()) {
+        return false;
+    }
+
+    *pessoaAutenticada = consulta;
+    return true;
+}
+
 bool PessoaService::criar(const Pessoa& pessoa, Papel papelSolicitante) {
     if (pessoaContainer == nullptr || !temPermissao(papelSolicitante)) {
         return false;

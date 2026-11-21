@@ -2,6 +2,7 @@
 #define PROJETOCONTROLLER_H
 
 #include "IProjetoService.h"
+#include "Papel.h"
 
 /**
  * @file ProjetoController.h
@@ -14,7 +15,7 @@ private:
 public:
     explicit ProjetoController(IProjetoService* servico);
 
-    void executar();
+    void executar(const Papel& papelSolicitante);
 
     ~ProjetoController() = default;
 };

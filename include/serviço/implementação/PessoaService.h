@@ -28,6 +28,8 @@ public:
                            ProjetoContainer* projetoContainer = nullptr,
                            CartaoAtividadeContainer* cartaoContainer = nullptr);
 
+    bool autenticar(const Email& email, const Senha& senha, Pessoa* pessoaAutenticada) override;
+
     bool criar(const Pessoa& pessoa, Papel papelSolicitante) override;
     bool ler(Pessoa* pessoa, Papel papelSolicitante) override;
     bool atualizar(const Pessoa& pessoa, Papel papelSolicitante) override;

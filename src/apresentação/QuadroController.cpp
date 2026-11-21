@@ -24,17 +24,6 @@ std::string lerLinhaQuad(const std::string& rotulo) {
     return entrada;
 }
 
-bool lerPapelQuad(Papel& saida) {
-    while (true) {
-        try {
-            saida.setValor(lerLinhaQuad("Papel do solicitante (GESTOR ou DESENVOLVEDOR): "));
-            return true;
-        } catch (const std::invalid_argument& e) {
-            std::cout << "Erro: " << e.what() << "\n";
-        }
-    }
-}
-
 bool lerIdQuad(Identificador& saida, const std::string& rotulo = "Identificador do quadro: ") {
     while (true) {
         try {
@@ -105,7 +94,7 @@ void exibirQuadro(const Quadro& q) {
 QuadroController::QuadroController(IQuadroService* servico)
     : servico(servico) {}
 
-void QuadroController::executar() {
+void QuadroController::executar(const Papel& papelSolicitante) {
     if (servico == nullptr) {
         std::cout << "Erro: servico de quadro nao configurado.\n";
         return;
@@ -131,8 +120,7 @@ void QuadroController::executar() {
 
         switch (opcao) {
             case 1: {
-                Papel papelSol;
-                if (!lerPapelQuad(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Quadro novoQuadro;
                 if (!lerDadosQuadro(novoQuadro, true)) break;
@@ -145,8 +133,7 @@ void QuadroController::executar() {
                 break;
             }
             case 2: {
-                Papel papelSol;
-                if (!lerPapelQuad(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Identificador id;
                 if (!lerIdQuad(id)) break;
@@ -162,8 +149,7 @@ void QuadroController::executar() {
                 break;
             }
             case 3: {
-                Papel papelSol;
-                if (!lerPapelQuad(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Quadro quadroAtualizado;
                 if (!lerDadosQuadro(quadroAtualizado, true)) break;
@@ -176,8 +162,7 @@ void QuadroController::executar() {
                 break;
             }
             case 4: {
-                Papel papelSol;
-                if (!lerPapelQuad(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Identificador id;
                 if (!lerIdQuad(id)) break;
@@ -190,8 +175,7 @@ void QuadroController::executar() {
                 break;
             }
             case 5: {
-                Papel papelSol;
-                if (!lerPapelQuad(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 std::vector<Quadro> lista;
                 if (servico->listar(&lista, papelSol)) {

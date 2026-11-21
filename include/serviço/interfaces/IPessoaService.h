@@ -5,6 +5,7 @@
 #include "Pessoa.h"
 #include "Email.h"
 #include "Papel.h"
+#include "Senha.h"
 
 /**
  * @file IPessoaService.h
@@ -12,6 +13,8 @@
  */
 class IPessoaService {
 public:
+    virtual bool autenticar(const Email& email, const Senha& senha, Pessoa* pessoaAutenticada) = 0;
+
     virtual bool criar(const Pessoa& pessoa, Papel papelSolicitante) = 0;
     virtual bool ler(Pessoa* pessoa, Papel papelSolicitante) = 0;
     virtual bool atualizar(const Pessoa& pessoa, Papel papelSolicitante) = 0;

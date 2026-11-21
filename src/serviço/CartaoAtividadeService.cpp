@@ -26,7 +26,7 @@ bool CartaoAtividadeService::desenvolvedorExiste(const Email& emailDesenvolvedor
 }
 
 bool CartaoAtividadeService::criar(const CartaoAtividade& cartao, Papel papelSolicitante) {
-    (void)papelSolicitante;
+    if (papelSolicitante.getValor() != "GESTOR") return false;
     if (cartaoContainer == nullptr) {
         return false;
     }
@@ -45,7 +45,7 @@ bool CartaoAtividadeService::ler(CartaoAtividade* cartao, Papel papelSolicitante
 }
 
 bool CartaoAtividadeService::atualizar(const CartaoAtividade& cartao, Papel papelSolicitante) {
-    (void)papelSolicitante;
+    if (papelSolicitante.getValor() != "GESTOR") return false;
     if (cartaoContainer == nullptr) {
         return false;
     }
@@ -56,7 +56,7 @@ bool CartaoAtividadeService::atualizar(const CartaoAtividade& cartao, Papel pape
 }
 
 bool CartaoAtividadeService::excluir(const Identificador& id, Papel papelSolicitante) {
-    (void)papelSolicitante;
+    if (papelSolicitante.getValor() != "GESTOR") return false;
     if (cartaoContainer == nullptr) {
         return false;
     }

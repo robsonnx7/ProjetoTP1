@@ -2,6 +2,7 @@
 #define PESSOACONTROLLER_H
 
 #include "IPessoaService.h"
+#include "Papel.h"
 
 /**
  * @file PessoaController.h
@@ -14,7 +15,7 @@ private:
 public:
     explicit PessoaController(IPessoaService* servico);
 
-    void executar();
+    void executar(const Papel& papelSolicitante);
 
     ~PessoaController() = default;
 };

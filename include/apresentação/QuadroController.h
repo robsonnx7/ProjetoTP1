@@ -2,6 +2,7 @@
 #define QUADROCONTROLLER_H
 
 #include "IQuadroService.h"
+#include "Papel.h"
 
 /**
  * @file QuadroController.h
@@ -14,7 +15,7 @@ private:
 public:
     explicit QuadroController(IQuadroService* servico);
 
-    void executar();
+    void executar(const Papel& papelSolicitante);
 
     ~QuadroController() = default;
 };

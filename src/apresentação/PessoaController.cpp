@@ -31,18 +31,6 @@ std::string lerLinha(const std::string& rotulo) {
     return entrada;
 }
 
-bool lerPapelSolicitante(Papel& papelSaida) {
-    while (true) {
-        std::string textoPapel = lerLinha("Papel do solicitante (GESTOR ou DESENVOLVEDOR): ");
-        try {
-            papelSaida.setValor(textoPapel);
-            return true;
-        } catch (const std::invalid_argument& e) {
-            std::cout << "Erro: " << e.what() << "\n";
-        }
-    }
-}
-
 bool lerEmail(Email& emailSaida) {
     while (true) {
         std::string textoEmail = lerLinha("E-mail: ");
@@ -116,7 +104,7 @@ void exibirPessoa(const Pessoa& pessoa) {
 PessoaController::PessoaController(IPessoaService* servico)
     : servico(servico) {}
 
-void PessoaController::executar() {
+void PessoaController::executar(const Papel& papelSolicitante) {
     if (servico == nullptr) {
         std::cout << "Erro: servico de pessoa nao configurado.\n";
         return;
@@ -142,8 +130,7 @@ void PessoaController::executar() {
 
         switch (opcao) {
             case 1: {
-                Papel papelSol;
-                if (!lerPapelSolicitante(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Pessoa novaPessoa;
                 if (!lerDadosPessoa(novaPessoa, true)) break;
@@ -156,8 +143,7 @@ void PessoaController::executar() {
                 break;
             }
             case 2: {
-                Papel papelSol;
-                if (!lerPapelSolicitante(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Email emailBusca;
                 if (!lerEmail(emailBusca)) break;
@@ -173,8 +159,7 @@ void PessoaController::executar() {
                 break;
             }
             case 3: {
-                Papel papelSol;
-                if (!lerPapelSolicitante(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Pessoa pessoaAtualizada;
                 if (!lerDadosPessoa(pessoaAtualizada, true)) break;
@@ -187,8 +172,7 @@ void PessoaController::executar() {
                 break;
             }
             case 4: {
-                Papel papelSol;
-                if (!lerPapelSolicitante(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 Email emailExcluir;
                 if (!lerEmail(emailExcluir)) break;
@@ -201,8 +185,7 @@ void PessoaController::executar() {
                 break;
             }
             case 5: {
-                Papel papelSol;
-                if (!lerPapelSolicitante(papelSol)) break;
+                Papel papelSol = papelSolicitante;
 
                 std::vector<Pessoa> lista;
                 if (servico->listar(&lista, papelSol)) {

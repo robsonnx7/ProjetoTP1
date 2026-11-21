@@ -371,7 +371,7 @@ void testarEntidades() {
         Projeto projeto;
         projeto.setIdentificador(Identificador("ABC123"));
         projeto.setNome(Nome("Sistema de TP"));
-        projeto.setDescricao(Texto("Sistema de Gestao!"));
+        projeto.setDescricao(Texto("Sistema de Gestao."));
         projeto.setInicio(Timestamp("01-OUT-2026-08:00"));
         projeto.setTermino(Timestamp("25-NOV-2026-18:00"));
 
@@ -395,7 +395,7 @@ void testarEntidades() {
         CartaoAtividade cartao;
         cartao.setIdentificador(Identificador("CAR123"));
         cartao.setNome(Nome("Criar Telas"));
-        cartao.setDescricao(Texto("Construir a interface inicial!"));
+        cartao.setDescricao(Texto("Construir interface inicial."));
         cartao.setPrioridade(Prioridade("ALTA"));
         cartao.setEstado(Estado("FAZENDO"));
         cartao.setTamanho(Tamanho("GRANDE"));
@@ -474,6 +474,18 @@ void testarPessoaContainerEServico() {
         std::cout << (servico.criar(p2, dev) ? "[OK]" : "[ERRO FALHO]")
                   << " PessoaService::criar p2\n";
 
+        Pessoa autenticada;
+        std::cout << (servico.autenticar(Email("ana.silva@unb.br"), Senha("Abc12"), &autenticada) &&
+                      autenticada.getPapel().getValor() == "GESTOR"
+                          ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::autenticar com credenciais corretas\n";
+        std::cout << (!servico.autenticar(Email("ana.silva@unb.br"), Senha("Xyz98"), &autenticada)
+                          ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::autenticar rejeita senha incorreta\n";
+        std::cout << (!servico.autenticar(Email("naoexiste@unb.br"), Senha("Abc12"), &autenticada)
+                          ? "[OK]" : "[ERRO FALHO]")
+                  << " PessoaService::autenticar rejeita e-mail inexistente\n";
+
         Pessoa consultaServico;
         consultaServico.setEmail(Email("carlos@unb.br"));
         std::cout << (servico.ler(&consultaServico, gestor) &&
@@ -538,21 +550,77 @@ void executarMenusModulos() {
     QuadroController controladorQuadro(ptrQuadroService);
     CartaoAtividadeController controladorCartao(ptrCartaoService);
 
+    std::vector<Pessoa> pessoas;
+    servicoPessoa.listar(&pessoas, Papel("GESTOR"));
+
+    // A primeira conta inicializa o sistema com o perfil de GESTOR.
+    if (pessoas.empty()) {
+        std::cout << "\n=== CONFIGURACAO INICIAL ===\n"
+                  << "Nenhuma conta cadastrada. Crie a primeira conta de GESTOR.\n";
+        Pessoa primeiroGestor;
+        try {
+            std::string email, nome, senha;
+            std::cout << "E-mail: ";
+            if (!std::getline(std::cin >> std::ws, email)) return;
+            primeiroGestor.setEmail(Email(email));
+            std::cout << "Nome: ";
+            if (!std::getline(std::cin, nome)) return;
+            primeiroGestor.setNome(Nome(nome));
+            std::cout << "Senha (5 caracteres, ao menos uma letra e um digito): ";
+            if (!std::getline(std::cin, senha)) return;
+            primeiroGestor.setSenha(Senha(senha));
+            primeiroGestor.setPapel(Papel("GESTOR"));
+            if (!servicoPessoa.criar(primeiroGestor, Papel("GESTOR"))) {
+                std::cout << "Nao foi possivel criar a conta inicial.\n";
+                return;
+            }
+            std::cout << "Conta inicial de GESTOR criada.\n";
+        } catch (const std::exception& e) {
+            std::cout << "Erro no cadastro inicial: " << e.what() << "\n";
+            return;
+        }
+    }
+
+    Pessoa usuarioAutenticado;
+    bool autenticado = false;
+    while (!autenticado) {
+        std::string emailTexto, senhaTexto;
+        std::cout << "\n=== LOGIN DO SISTEMA KANBAN ===\n";
+        std::cout << "E-mail (ou 0 para sair): ";
+        if (!std::getline(std::cin >> std::ws, emailTexto)) return;
+        if (emailTexto == "0") return;
+        std::cout << "Senha: ";
+        if (!std::getline(std::cin, senhaTexto)) return;
+        try {
+            Email email(emailTexto);
+            Senha senha(senhaTexto);
+            autenticado = servicoPessoa.autenticar(email, senha, &usuarioAutenticado);
+            if (!autenticado) std::cout << "E-mail ou senha incorretos. Tente novamente.\n";
+        } catch (const std::exception&) {
+            std::cout << "Credenciais em formato invalido. Tente novamente.\n";
+        }
+    }
+
+    std::cout << "\nBem-vindo(a), " << usuarioAutenticado.getNome().getValor()
+              << "! Perfil: " << usuarioAutenticado.getPapel().getValor() << "\n";
+    const Papel papelSessao = usuarioAutenticado.getPapel();
+
     int opcao = -1;
     do {
         std::cout << "\n============================================\n"
-                  << "MENU PRINCIPAL - SELECIONE A PARTE\n"
-                  << "Hierarquia criacao : Pessoa -> Projeto -> Quadro -> Cartao\n"
-                  << "Hierarquia exclusao: Cartao -> Quadro -> Projeto -> Pessoa\n"
+                  << "MENU PRINCIPAL - SISTEMA KANBAN\n"
+                  << "Usuario: " << usuarioAutenticado.getNome().getValor()
+                  << " (" << papelSessao.getValor() << ")\n"
                   << "============================================\n"
-                  << "1. Parte Pessoa\n"
-                  << "2. Parte Projeto\n"
-                  << "3. Parte Quadro\n"
-                  << "4. Parte Cartao de Atividade\n"
-                  << "0. Voltar / Encerrar\n"
+                  << "1. Gerenciar pessoas\n"
+                  << "2. Gerenciar projetos\n"
+                  << "3. Gerenciar quadros\n"
+                  << "4. Gerenciar cartoes de atividade\n"
+                  << "0. Encerrar sessao\n"
                   << "Escolha: ";
 
         if (!(std::cin >> opcao)) {
+            if (std::cin.eof()) return;
             limparBufferMenuPrincipal();
             std::cout << "Entrada invalida.\n";
             continue;
@@ -560,24 +628,12 @@ void executarMenusModulos() {
         limparBufferMenuPrincipal();
 
         switch (opcao) {
-            case 1:
-                controladorPessoa.executar();
-                break;
-            case 2:
-                controladorProjeto.executar();
-                break;
-            case 3:
-                controladorQuadro.executar();
-                break;
-            case 4:
-                controladorCartao.executar();
-                break;
-            case 0:
-                std::cout << "Saindo do menu de partes...\n";
-                break;
-            default:
-                std::cout << "Opcao invalida.\n";
-                break;
+            case 1: controladorPessoa.executar(papelSessao); break;
+            case 2: controladorProjeto.executar(papelSessao); break;
+            case 3: controladorQuadro.executar(papelSessao); break;
+            case 4: controladorCartao.executar(papelSessao); break;
+            case 0: std::cout << "Sessao encerrada.\n"; break;
+            default: std::cout << "Opcao invalida.\n"; break;
         }
     } while (opcao != 0);
 }
@@ -704,10 +760,10 @@ int main() {
     // =============================================
     std::cout << "\n=== TESTES DE TEXTO VALIDOS ===" << std::endl;
     validos = {
-        "Tarefa importante",
-        "A1, teste final!",
-        "Texto curto?",
-        "Exemplo: com pontuacao"
+        "Tarefa importante.",
+        "A1, teste final.",
+        "Texto curto.",
+        "Exemplo: com ponto."
     };
     for (const auto& txt : validos) {
         testarTextoValido(txt);
@@ -715,9 +771,9 @@ int main() {
 
     std::cout << "\n=== TESTES DE TEXTO INVALIDOS ===" << std::endl;
     invalidos = {
-        "texto comecando minúsculo",
+        "texto comecando minusculo.",
         "Texto com mais de trinta caracteres aqui...",
-        "Texto terminando com ponto.",
+        "Texto sem ponto final",
         "Texto com pontuacao.. dupla",
         "Texto com pontuacao!?",
         "Texto com @ invalido"
@@ -883,10 +939,10 @@ int main() {
     testarPessoaContainerEServico();
 
     // =============================================
-    // MENU INTERATIVO NO TERMINAL POR PARTE
+    // ACESSO AO SISTEMA COM AUTENTICACAO
     // =============================================
     char abrirMenu = 'n';
-    std::cout << "\nDeseja abrir o menu interativo das partes no terminal? (s/n): ";
+    std::cout << "\nDeseja iniciar o sistema? (s/n): ";
     std::cin >> abrirMenu;
     limparBufferMenuPrincipal();
 

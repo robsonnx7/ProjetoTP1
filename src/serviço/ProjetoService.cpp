@@ -23,6 +23,7 @@ bool ProjetoService::possuiQuadrosVinculados(const Identificador& idProjeto) con
 }
 
 bool ProjetoService::criar(const Projeto& projeto, Papel papelSolicitante) {
+    if (papelSolicitante.getValor() != "GESTOR") return false;
     if (projetoContainer == nullptr) {
         return false;
     }
@@ -41,6 +42,7 @@ bool ProjetoService::ler(Projeto* projeto, Papel papelSolicitante) {
 }
 
 bool ProjetoService::atualizar(const Projeto& projeto, Papel papelSolicitante) {
+    if (papelSolicitante.getValor() != "GESTOR") return false;
     if (projetoContainer == nullptr) {
         return false;
     }
@@ -51,7 +53,7 @@ bool ProjetoService::atualizar(const Projeto& projeto, Papel papelSolicitante) {
 }
 
 bool ProjetoService::excluir(const Identificador& id, Papel papelSolicitante) {
-    (void)papelSolicitante;
+    if (papelSolicitante.getValor() != "GESTOR") return false;
     if (projetoContainer == nullptr) {
         return false;
     }
