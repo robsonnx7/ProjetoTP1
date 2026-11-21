@@ -7,7 +7,7 @@
 
 /**
  * @file PessoaContainer.h
- * @brief Declaração do container em memória para a entidade Pessoa.
+ * @brief Container em memoria para armazenamento de objetos Pessoa.
  */
 class PessoaContainer {
 private:
@@ -23,8 +23,6 @@ public:
     bool atualizar(const Pessoa& pessoa);
     bool remover(const Email& email);
     bool listar(std::vector<Pessoa>* pessoasSaida) const;
-
-    ~PessoaContainer() = default;
 };
 
 #endif // PESSOACONTAINER_H

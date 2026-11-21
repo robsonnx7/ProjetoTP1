@@ -8,7 +8,7 @@
 
 /**
  * @file IPessoaService.h
- * @brief Interface para o serviço de gerenciamento de Pessoa.
+ * @brief Interface abstrata pura para o servico de gerenciamento de Pessoa.
  */
 class IPessoaService {
 public:

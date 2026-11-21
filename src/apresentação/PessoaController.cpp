@@ -196,7 +196,7 @@ void PessoaController::executar() {
                 if (servico->excluir(emailExcluir, papelSol)) {
                     std::cout << "Pessoa excluida com sucesso.\n";
                 } else {
-                    std::cout << "Nao foi possivel excluir (verifique permissao ou existencia do e-mail).\n";
+                    std::cout << "Nao foi possivel excluir (verifique permissao, existencia ou se ha projetos/cartoes vinculados).\n";
                 }
                 break;
             }
