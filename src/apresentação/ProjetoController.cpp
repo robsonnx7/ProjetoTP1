@@ -12,13 +12,26 @@
 #include "Email.h"
 #include "Papel.h"
 
+/**
+ * @file ProjetoController.cpp
+ * @brief Implementação da controladora de apresentação para Projeto.
+ */
+
 namespace {
 
+/**
+ * @brief Limpa o estado de erro e descarta caracteres restantes no buffer de entrada padrão.
+ */
 void limparBufferProj() {
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
+/**
+ * @brief Exibe um rótulo e lê uma linha de texto da entrada padrão.
+ * @param rotulo Mensagem exibida ao usuário antes da leitura.
+ * @return Linha digitada pelo usuário.
+ */
 std::string lerLinhaProj(const std::string& rotulo) {
     std::string entrada;
     std::cout << rotulo;
@@ -26,6 +39,11 @@ std::string lerLinhaProj(const std::string& rotulo) {
     return entrada;
 }
 
+/**
+ * @brief Lê e valida o Identificador de um projeto a partir da entrada padrão.
+ * @param[out] saida Objeto Identificador preenchido com o valor validado.
+ * @return true se a leitura e validação forem concluídas.
+ */
 bool lerIdProj(Identificador& saida) {
     while (true) {
         try {
@@ -37,6 +55,12 @@ bool lerIdProj(Identificador& saida) {
     }
 }
 
+/**
+ * @brief Lê e valida todos os campos necessários para montar um Projeto.
+ * @param[out] proj Objeto Projeto preenchido com os dados informados.
+ * @param exigirId Indica se o identificador do projeto deve ser solicitado na leitura.
+ * @return true se todos os campos forem preenchidos com sucesso.
+ */
 bool lerDadosProjeto(Projeto& proj, bool exigirId = true) {
     if (exigirId) {
         Identificador id;
@@ -102,6 +126,10 @@ bool lerDadosProjeto(Projeto& proj, bool exigirId = true) {
     return true;
 }
 
+/**
+ * @brief Formata e exibe na saída padrão os dados de um Projeto.
+ * @param p Projeto a ser exibido.
+ */
 void exibirProjeto(const Projeto& p) {
     std::cout << "-------------------------------------\n"
               << "ID      : " << p.getIdentificador().getValor() << "\n"
@@ -115,9 +143,17 @@ void exibirProjeto(const Projeto& p) {
 
 } // namespace
 
+/**
+ * @brief Constrói a controladora associando-a ao serviço de projeto.
+ * @param servico Ponteiro para a implementação de IProjetoService.
+ */
 ProjetoController::ProjetoController(IProjetoService* servico)
     : servico(servico) {}
 
+/**
+ * @brief Executa o menu interativo de operações sobre Projeto.
+ * @param papelSolicitante Papel do usuário solicitante das operações.
+ */
 void ProjetoController::executar(const Papel& papelSolicitante) {
     if (servico == nullptr) {
         std::cout << "Erro: servico de projeto nao configurado.\n";

@@ -10,13 +10,26 @@
 #include "Limite.h"
 #include "Papel.h"
 
+/**
+ * @file QuadroController.cpp
+ * @brief Implementação da controladora de apresentação para Quadro.
+ */
+
 namespace {
 
+/**
+ * @brief Limpa o estado de erro e descarta caracteres restantes no buffer de entrada padrão.
+ */
 void limparBufferQuad() {
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
+/**
+ * @brief Exibe um rótulo e lê uma linha de texto da entrada padrão.
+ * @param rotulo Mensagem exibida ao usuário antes da leitura.
+ * @return Linha digitada pelo usuário.
+ */
 std::string lerLinhaQuad(const std::string& rotulo) {
     std::string entrada;
     std::cout << rotulo;
@@ -24,6 +37,12 @@ std::string lerLinhaQuad(const std::string& rotulo) {
     return entrada;
 }
 
+/**
+ * @brief Lê e valida um Identificador a partir da entrada padrão.
+ * @param[out] saida Objeto Identificador preenchido com o valor validado.
+ * @param rotulo Mensagem exibida ao usuário.
+ * @return true se a leitura e validação forem concluídas.
+ */
 bool lerIdQuad(Identificador& saida, const std::string& rotulo = "Identificador do quadro: ") {
     while (true) {
         try {
@@ -35,6 +54,12 @@ bool lerIdQuad(Identificador& saida, const std::string& rotulo = "Identificador 
     }
 }
 
+/**
+ * @brief Lê e valida todos os campos necessários para montar um Quadro.
+ * @param[out] quadro Objeto Quadro preenchido com os dados informados.
+ * @param exigirId Indica se o identificador do quadro deve ser solicitado na leitura.
+ * @return true se todos os campos forem preenchidos com sucesso.
+ */
 bool lerDadosQuadro(Quadro& quadro, bool exigirId = true) {
     if (exigirId) {
         Identificador id;
@@ -80,6 +105,10 @@ bool lerDadosQuadro(Quadro& quadro, bool exigirId = true) {
     return true;
 }
 
+/**
+ * @brief Formata e exibe na saída padrão os dados de um Quadro.
+ * @param q Quadro a ser exibido.
+ */
 void exibirQuadro(const Quadro& q) {
     std::cout << "-------------------------------------\n"
               << "ID Quadro  : " << q.getIdentificador().getValor() << "\n"
@@ -91,9 +120,17 @@ void exibirQuadro(const Quadro& q) {
 
 } // namespace
 
+/**
+ * @brief Constrói a controladora associando-a ao serviço de quadro.
+ * @param servico Ponteiro para a implementação de IQuadroService.
+ */
 QuadroController::QuadroController(IQuadroService* servico)
     : servico(servico) {}
 
+/**
+ * @brief Executa o menu interativo de operações sobre Quadro.
+ * @param papelSolicitante Papel do usuário solicitante das operações.
+ */
 void QuadroController::executar(const Papel& papelSolicitante) {
     if (servico == nullptr) {
         std::cout << "Erro: servico de quadro nao configurado.\n";

@@ -15,13 +15,26 @@
 #include "Email.h"
 #include "Papel.h"
 
+/**
+ * @file CartaoAtividadeController.cpp
+ * @brief Implementação da controladora de apresentação para CartaoAtividade.
+ */
+
 namespace {
 
+/**
+ * @brief Limpa o estado de erro e descarta caracteres restantes no buffer de entrada padrão.
+ */
 void limparBufferCart() {
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
+/**
+ * @brief Exibe um rótulo e lê uma linha de texto da entrada padrão.
+ * @param rotulo Mensagem exibida ao usuário antes da leitura.
+ * @return Linha digitada pelo usuário.
+ */
 std::string lerLinhaCart(const std::string& rotulo) {
     std::string entrada;
     std::cout << rotulo;
@@ -29,6 +42,12 @@ std::string lerLinhaCart(const std::string& rotulo) {
     return entrada;
 }
 
+/**
+ * @brief Lê e valida um Identificador a partir da entrada padrão.
+ * @param[out] saida Objeto Identificador preenchido com o valor validado.
+ * @param rotulo Mensagem exibida ao usuário.
+ * @return true se a leitura e validação forem concluídas.
+ */
 bool lerIdCart(Identificador& saida, const std::string& rotulo) {
     while (true) {
         try {
@@ -40,6 +59,12 @@ bool lerIdCart(Identificador& saida, const std::string& rotulo) {
     }
 }
 
+/**
+ * @brief Lê e valida todos os campos necessários para montar um CartaoAtividade.
+ * @param[out] cartao Objeto CartaoAtividade preenchido com os dados informados.
+ * @param exigirId Indica se o identificador do cartão deve ser solicitado na leitura.
+ * @return true se todos os campos forem preenchidos com sucesso.
+ */
 bool lerDadosCartao(CartaoAtividade& cartao, bool exigirId = true) {
     if (exigirId) {
         Identificador id;
@@ -153,6 +178,10 @@ bool lerDadosCartao(CartaoAtividade& cartao, bool exigirId = true) {
     return true;
 }
 
+/**
+ * @brief Formata e exibe na saída padrão os dados de um CartaoAtividade.
+ * @param c Cartão de atividade a ser exibido.
+ */
 void exibirCartao(const CartaoAtividade& c) {
     std::cout << "-----------------------------------------\n"
               << "ID Cartao    : " << c.getIdentificador().getValor() << "\n"
@@ -171,9 +200,17 @@ void exibirCartao(const CartaoAtividade& c) {
 
 } // namespace
 
+/**
+ * @brief Constrói a controladora associando-a ao serviço de cartão de atividade.
+ * @param servico Ponteiro para a implementação de ICartaoAtividadeService.
+ */
 CartaoAtividadeController::CartaoAtividadeController(ICartaoAtividadeService* servico)
     : servico(servico) {}
 
+/**
+ * @brief Executa o menu interativo de operações sobre CartaoAtividade.
+ * @param papelSolicitante Papel do usuário solicitante das operações.
+ */
 void CartaoAtividadeController::executar(const Papel& papelSolicitante) {
     if (servico == nullptr) {
         std::cout << "Erro: servico de cartao de atividade nao configurado.\n";

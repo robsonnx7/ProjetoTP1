@@ -19,11 +19,19 @@
 
 namespace {
 
+/**
+ * @brief Limpa o estado de erro e descarta caracteres restantes no buffer de entrada padrão.
+ */
 void limparBuffer() {
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
+/**
+ * @brief Exibe um rótulo e lê uma linha de texto da entrada padrão.
+ * @param rotulo Mensagem exibida ao usuário antes da leitura.
+ * @return Linha digitada pelo usuário.
+ */
 std::string lerLinha(const std::string& rotulo) {
     std::string entrada;
     std::cout << rotulo;
@@ -31,6 +39,11 @@ std::string lerLinha(const std::string& rotulo) {
     return entrada;
 }
 
+/**
+ * @brief Lê e valida um Email a partir da entrada padrão.
+ * @param[out] emailSaida Objeto Email preenchido com o valor validado.
+ * @return true se o e-mail for lido e validado com sucesso.
+ */
 bool lerEmail(Email& emailSaida) {
     while (true) {
         std::string textoEmail = lerLinha("E-mail: ");
@@ -43,6 +56,12 @@ bool lerEmail(Email& emailSaida) {
     }
 }
 
+/**
+ * @brief Lê e valida os dados de uma Pessoa a partir da entrada padrão.
+ * @param[out] pessoaSaida Objeto Pessoa preenchido com os valores informados.
+ * @param exigirEmail Indica se o e-mail deve ser lido na entrada.
+ * @return true se todos os dados forem preenchidos com sucesso.
+ */
 bool lerDadosPessoa(Pessoa& pessoaSaida, bool exigirEmail = true) {
     if (exigirEmail) {
         Email email;
@@ -91,6 +110,10 @@ bool lerDadosPessoa(Pessoa& pessoaSaida, bool exigirEmail = true) {
     return true;
 }
 
+/**
+ * @brief Formata e exibe na saída padrão os dados públicos de uma Pessoa.
+ * @param pessoa Objeto Pessoa a ser exibido.
+ */
 void exibirPessoa(const Pessoa& pessoa) {
     std::cout << "---------------------------\n"
               << "E-mail : " << pessoa.getEmail().getValor() << "\n"
@@ -101,9 +124,17 @@ void exibirPessoa(const Pessoa& pessoa) {
 
 } // namespace
 
+/**
+ * @brief Constrói a controladora associando-a ao serviço de pessoa.
+ * @param servico Ponteiro para a implementação de IPessoaService.
+ */
 PessoaController::PessoaController(IPessoaService* servico)
     : servico(servico) {}
 
+/**
+ * @brief Executa o menu interativo de operações sobre Pessoa.
+ * @param papelSolicitante Papel do usuário solicitante das operações.
+ */
 void PessoaController::executar(const Papel& papelSolicitante) {
     if (servico == nullptr) {
         std::cout << "Erro: servico de pessoa nao configurado.\n";
