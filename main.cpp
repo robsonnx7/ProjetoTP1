@@ -942,7 +942,7 @@ int main() {
     // ACESSO AO SISTEMA COM AUTENTICACAO
     // =============================================
     char abrirMenu = 'n';
-    std::cout << "\nDeseja iniciar o sistema? (s/n): ";
+    std::cout << "\nDeseja iniciar o sistema que utiliza o metodo Kanban? (s/n): ";
     std::cin >> abrirMenu;
     limparBufferMenuPrincipal();
 
